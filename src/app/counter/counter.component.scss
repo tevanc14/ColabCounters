@@ -1,0 +1,14 @@
+$card-dimension: 250px;
+$spacing: 20px;
+
+.counter-card {
+  height: $card-dimension;
+  width: $card-dimension;
+  border-radius: 5px;
+  margin: $spacing;
+  padding: $spacing;
+  text-align: center;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 3px #ccc;
+}

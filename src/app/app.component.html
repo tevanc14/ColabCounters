@@ -1,24 +1,7 @@
 <mat-toolbar color="primary"> <span>Counters</span> </mat-toolbar>
 <div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
   <ng-container *ngFor="let counter of (counters | async)">
-    <div
-      class="counter-card mat-typography"
-      fxLayout="column"
-      fxLayoutAlign="space-between"
-    >
-      <h2>{{ counter.name }}</h2>
-      <h1>{{ counter.currentCount }}</h1>
-      <div fxLayout="row" fxLayoutAlign="space-between">
-        <button
-          mat-raised-button
-          (click)="increment(counter.id)"
-          color="primary"
-        >
-          -
-        </button>
-        <button mat-raised-button color="primary">+</button>
-      </div>
-    </div>
+    <app-counter [counter]="counter"></app-counter>
   </ng-container>
   <button mat-fab class="add-button" color="primary">+</button>
 </div>
