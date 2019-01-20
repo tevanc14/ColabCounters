@@ -9,7 +9,6 @@ import { CountersService } from "../service/counters.service";
 })
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
-  hovering = false;
 
   constructor(private countersService: CountersService) {}
 
@@ -21,8 +20,10 @@ export class CounterComponent implements OnInit {
   }
 
   decrement(counter: Counter) {
-    const decrementedCount = counter.totalCount - 1;
-    this.updateTotalCount(decrementedCount, counter, CountType.DECREMENT);
+    if (counter.totalCount > 0) {
+      const decrementedCount = counter.totalCount - 1;
+      this.updateTotalCount(decrementedCount, counter, CountType.DECREMENT);
+    }
   }
 
   updateTotalCount(newCount: number, counter: Counter, countType: CountType) {

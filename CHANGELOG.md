@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.1] - 2019-01-20
+
+Added
+
+- Not allow a counter to decrement below zero
+
 ## [0.2.0] - 2019-01-20
 
 Added
