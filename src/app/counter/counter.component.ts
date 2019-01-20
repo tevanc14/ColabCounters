@@ -28,4 +28,14 @@ export class CounterComponent implements OnInit {
   updateCurrentCount(id: string, newCount: number) {
     this.countersService.updateCounter(id, { currentCount: newCount });
   }
+
+  mouseEnter() {
+    this.hovering = true;
+    console.log("mouseEnter");
+  }
+
+  mouseLeave() {
+    this.hovering = false;
+    console.log("mouseLeave");
+  }
 }

@@ -9,7 +9,6 @@ import {
 import { config } from "./../app.config";
 import { Counter } from "../model/counter";
 import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
 
 @Injectable()
 export class CountersService {
@@ -37,6 +36,8 @@ export class CountersService {
   }
 
   updateCounter(id: string, update: Partial<Counter>) {
+    // TODO: Add bottom limit?
+    // TODO: Add to count object
     this.counters.doc(id).update(update);
   }
 

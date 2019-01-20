@@ -3,8 +3,8 @@ $spacing: 20px;
 $shadow-blur: 3px;
 $border-radius: 5px;
 
-$dimension-expansion: 1.1;
 $blur-expansion: 3;
+$transition-length: 0.25s;
 
 .counter-card {
   height: $card-dimension;
@@ -16,16 +16,14 @@ $blur-expansion: 3;
   -moz-box-shadow: 0 0 $shadow-blur #ccc;
   -webkit-box-shadow: 0 0 $shadow-blur #ccc;
   box-shadow: 0 0 $shadow-blur #ccc;
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  transition: all 1s ease;
+  -webkit-transition: all $transition-length ease;
+  -moz-transition: all $transition-length ease;
+  -o-transition: all $transition-length ease;
+  -ms-transition: all $transition-length ease;
+  transition: all $transition-length ease;
 }
 
 .counter-card:hover {
-  height: $card-dimension * $dimension-expansion;
-  width: $card-dimension * $dimension-expansion;
   -moz-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
   -webkit-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
   box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
