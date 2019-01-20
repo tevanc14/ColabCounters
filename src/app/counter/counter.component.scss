@@ -1,5 +1,4 @@
 $card-dimension: 250px;
-$spacing: 20px;
 $shadow-blur: 3px;
 $border-radius: 5px;
 
@@ -10,8 +9,8 @@ $transition-length: 0.25s;
   height: $card-dimension;
   width: $card-dimension;
   border-radius: $border-radius;
-  margin: $spacing;
-  padding: $spacing;
+  margin: 30px;
+  padding: 20px;
   text-align: center;
   -moz-box-shadow: 0 0 $shadow-blur #ccc;
   -webkit-box-shadow: 0 0 $shadow-blur #ccc;
@@ -27,4 +26,11 @@ $transition-length: 0.25s;
   -moz-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
   -webkit-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
   box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
+}
+
+.delete-button {
+  $button-offset: 40px;
+  position: relative;
+  top: -$button-offset;
+  left: $card-dimension - $button-offset;
 }

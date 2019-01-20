@@ -12,7 +12,6 @@ import { map } from "rxjs/operators";
 @Injectable()
 export class CountersService {
   counters: AngularFirestoreCollection<Counter>;
-  private counterDoc: AngularFirestoreDocument<Counter>;
 
   constructor(private db: AngularFirestore) {
     this.counters = db.collection<Counter>(config.collectionEndpoint);
@@ -41,10 +40,10 @@ export class CountersService {
   }
 
   deleteCounter(id: string) {
-    this.counterDoc = this.db.doc<Counter>(
+    const counterDoc: AngularFirestoreDocument<Counter> = this.db.doc<Counter>(
       `${config.collectionEndpoint}/${id}`
     );
 
-    this.counterDoc.delete();
+    counterDoc.delete();
   }
 }

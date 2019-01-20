@@ -32,4 +32,8 @@ export class CounterComponent implements OnInit {
     const update = { totalCount: newCount, counts: counter.counts };
     this.countersService.updateCounter(counter.id, update);
   }
+
+  delete(counter: Counter) {
+    this.countersService.deleteCounter(counter.id);
+  }
 }
