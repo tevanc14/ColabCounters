@@ -2,21 +2,20 @@ import { Injectable } from "@angular/core";
 import {
   AngularFirestoreDocument,
   AngularFirestore,
-  AngularFirestoreCollection,
-  DocumentChangeAction
+  AngularFirestoreCollection
 } from "@angular/fire/firestore";
 
 import { config } from "./../app.config";
-import { Counter } from "../model/counter";
+import { Counter, Count } from "../model/counter";
 import { map } from "rxjs/operators";
 
 @Injectable()
 export class CountersService {
   counters: AngularFirestoreCollection<Counter>;
-  private CounterDoc: AngularFirestoreDocument<Counter>;
+  private counterDoc: AngularFirestoreDocument<Counter>;
 
   constructor(private db: AngularFirestore) {
-    this.counters = db.collection<Counter>(config.collection_endpoint);
+    this.counters = db.collection<Counter>(config.collectionEndpoint);
   }
 
   getCounters() {
@@ -31,21 +30,21 @@ export class CountersService {
     );
   }
 
-  addCounter(counter: Counter) {
-    this.counters.add(counter);
+  addCounter(name: string) {
+    const id = this.db.createId();
+    const counter = new Counter(id, name, 0, []);
+    this.counters.doc(id).set(Object.assign({}, counter));
   }
 
   updateCounter(id: string, update: Partial<Counter>) {
-    // TODO: Add bottom limit?
-    // TODO: Add to count object
     this.counters.doc(id).update(update);
   }
 
-  deleteCounter(id) {
-    this.CounterDoc = this.db.doc<Counter>(
-      `${config.collection_endpoint}/${id}`
+  deleteCounter(id: string) {
+    this.counterDoc = this.db.doc<Counter>(
+      `${config.collectionEndpoint}/${id}`
     );
 
-    this.CounterDoc.delete();
+    this.counterDoc.delete();
   }
 }

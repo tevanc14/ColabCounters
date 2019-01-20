@@ -4,14 +4,18 @@ export enum CountType {
 }
 
 export class Count {
-  constructor(public type: CountType, public timestamp: Date) {}
+  constructor(
+    public currentCount: number,
+    public type: CountType,
+    public timestamp: Date
+  ) {}
 }
 
 export class Counter {
   constructor(
     public id: string,
     public name: string,
-    public currentCount: number,
+    public totalCount: number,
     public counts: Array<Count>
   ) {}
 }

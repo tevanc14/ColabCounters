@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.0] - 2019-01-19
+
+Added
+
+- Create new counters
+
 ## [0.0.3] - 2019-01-19
 
 Changed

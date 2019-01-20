@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>New Counter</h1>
+<div mat-dialog-content>
+  <p class="mat-body">What is the name of the new counter?</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.newCounterName" maxLength="50" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [mat-dialog-close]="data.newCounterName"
+  >
+    Create
+  </button>
+</div>

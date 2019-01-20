@@ -1,10 +1,6 @@
-<div
-  class="counter-card mat-typography"
-  fxLayout="column"
-  fxLayoutAlign="space-between"
->
-  <h2>{{ counter.name }}</h2>
-  <h1>{{ counter.currentCount }}</h1>
+<div class="counter-card" fxLayout="column" fxLayoutAlign="space-between">
+  <h2 class="mat-h2">{{ counter.name }}</h2>
+  <h1 class="mat-h1">{{ counter.totalCount }}</h1>
   <div fxLayout="row" fxLayoutAlign="space-between">
     <button mat-raised-button (click)="decrement(counter)" color="primary">
       -

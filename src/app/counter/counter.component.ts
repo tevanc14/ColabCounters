@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Counter } from "../model/counter";
+import { Counter, Count, CountType } from "../model/counter";
 import { CountersService } from "../service/counters.service";
 
 @Component({
@@ -16,26 +16,20 @@ export class CounterComponent implements OnInit {
   ngOnInit() {}
 
   increment(counter: Counter) {
-    const incrementedCount = counter.currentCount + 1;
-    this.updateCurrentCount(counter.id, incrementedCount);
+    const incrementedCount = counter.totalCount + 1;
+    this.updateTotalCount(incrementedCount, counter, CountType.INCREMENT);
   }
 
   decrement(counter: Counter) {
-    const decrementedCount = counter.currentCount - 1;
-    this.updateCurrentCount(counter.id, decrementedCount);
+    const decrementedCount = counter.totalCount - 1;
+    this.updateTotalCount(decrementedCount, counter, CountType.DECREMENT);
   }
 
-  updateCurrentCount(id: string, newCount: number) {
-    this.countersService.updateCounter(id, { currentCount: newCount });
-  }
-
-  mouseEnter() {
-    this.hovering = true;
-    console.log("mouseEnter");
-  }
-
-  mouseLeave() {
-    this.hovering = false;
-    console.log("mouseLeave");
+  updateTotalCount(newCount: number, counter: Counter, countType: CountType) {
+    counter.counts.push(
+      Object.assign({}, new Count(newCount, countType, new Date()))
+    );
+    const update = { totalCount: newCount, counts: counter.counts };
+    this.countersService.updateCounter(counter.id, update);
   }
 }
