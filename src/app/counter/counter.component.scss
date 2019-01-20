@@ -1,14 +1,32 @@
 $card-dimension: 250px;
 $spacing: 20px;
+$shadow-blur: 3px;
+$border-radius: 5px;
+
+$dimension-expansion: 1.1;
+$blur-expansion: 3;
 
 .counter-card {
   height: $card-dimension;
   width: $card-dimension;
-  border-radius: 5px;
+  border-radius: $border-radius;
   margin: $spacing;
   padding: $spacing;
   text-align: center;
-  -moz-box-shadow: 0 0 3px #ccc;
-  -webkit-box-shadow: 0 0 3px #ccc;
-  box-shadow: 0 0 3px #ccc;
+  -moz-box-shadow: 0 0 $shadow-blur #ccc;
+  -webkit-box-shadow: 0 0 $shadow-blur #ccc;
+  box-shadow: 0 0 $shadow-blur #ccc;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  -ms-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+.counter-card:hover {
+  height: $card-dimension * $dimension-expansion;
+  width: $card-dimension * $dimension-expansion;
+  -moz-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
+  -webkit-box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
+  box-shadow: 0 0 ($shadow-blur * $blur-expansion) #ccc;
 }

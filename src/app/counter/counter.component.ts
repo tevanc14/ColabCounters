@@ -9,6 +9,7 @@ import { CountersService } from "../service/counters.service";
 })
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
+  hovering = false;
 
   constructor(private countersService: CountersService) {}
 
@@ -27,6 +28,4 @@ export class CounterComponent implements OnInit {
   updateCurrentCount(id: string, newCount: number) {
     this.countersService.updateCounter(id, { currentCount: newCount });
   }
-
-  mouseOver() {}
 }

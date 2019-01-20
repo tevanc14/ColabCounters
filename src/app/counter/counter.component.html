@@ -1,17 +1,16 @@
 <div
-      class="counter-card mat-typography"
-      on-mouseover="mouseOver()"
-      fxLayout="column"
-      fxLayoutAlign="space-between"
-    >
-      <h2>{{ counter.name }}</h2>
-      <h1>{{ counter.currentCount }}</h1>
-      <div fxLayout="row" fxLayoutAlign="space-between">
-        <button mat-raised-button (click)="decrement(counter)" color="primary">
-          -
-        </button>
-        <button mat-raised-button (click)="increment(counter)" color="primary">
-          +
-        </button>
-      </div>
-    </div>
+  class="counter-card mat-typography"
+  fxLayout="column"
+  fxLayoutAlign="space-between"
+>
+  <h2>{{ counter.name }}</h2>
+  <h1>{{ counter.currentCount }}</h1>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <button mat-raised-button (click)="decrement(counter)" color="primary">
+      -
+    </button>
+    <button mat-raised-button (click)="increment(counter)" color="primary">
+      +
+    </button>
+  </div>
+</div>
