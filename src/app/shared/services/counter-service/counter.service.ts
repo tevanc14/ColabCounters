@@ -8,13 +8,21 @@ import {
 import { config } from "./../../../app.config";
 import { Counter } from "./../../model/counter";
 import { map } from "rxjs/operators";
+import { AuthService } from "../auth/auth.service";
 
 @Injectable()
 export class CounterService {
+  collectionEndpoint: string;
   counters: AngularFirestoreCollection<Counter>;
 
-  constructor(private db: AngularFirestore) {
-    this.counters = db.collection<Counter>(config.collectionEndpoint);
+  constructor(private db: AngularFirestore, public authService: AuthService) {
+    this.collectionEndpoint = this.buildCollectionEndpoint();
+    this.counters = db.collection<Counter>(this.collectionEndpoint);
+  }
+
+  buildCollectionEndpoint() {
+    const pathStrings = ["users", this.authService.userData.uid, "counters"];
+    return pathStrings.join("/");
   }
 
   getCounters() {
@@ -39,9 +47,9 @@ export class CounterService {
     this.counters.doc(id).update(update);
   }
 
-  deleteCounter(id: string) {
+  deleteCounter(counterId: string) {
     const counterDoc: AngularFirestoreDocument<Counter> = this.db.doc<Counter>(
-      `${config.collectionEndpoint}/${id}`
+      `${this.collectionEndpoint}/${counterId}`
     );
 
     counterDoc.delete();

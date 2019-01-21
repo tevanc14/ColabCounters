@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2019-01-21
+
+Added
+
+- Get counters for the authenticated user
+
 ## [0.3.0] - 2019-01-21
 
 Added

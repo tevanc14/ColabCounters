@@ -16,19 +16,19 @@ export class AuthService {
   localStorageUserKey = "user";
 
   constructor(
-    public afs: AngularFirestore,
-    public afAuth: AngularFireAuth,
-    public router: Router,
-    public ngZone: NgZone
+    private angularFirestore: AngularFirestore,
+    private angularFireAuth: AngularFireAuth,
+    private router: Router,
+    private ngZone: NgZone
   ) {
-    this.afAuth.authState.subscribe(user => {
+    this.angularFireAuth.authState.subscribe(user => {
       if (user) {
         this.userData = user;
         this.setLocalStorageUser(JSON.stringify(this.userData));
         this.getLocalStorageUser();
       } else {
-        this.setLocalStorageUser(null);
         this.getLocalStorageUser();
+        this.setLocalStorageUser(null);
       }
     });
   }
@@ -41,16 +41,17 @@ export class AuthService {
     localStorage.setItem(this.localStorageUserKey, user);
   }
 
+  removeLocalStorageUser() {
+    localStorage.removeItem(this.localStorageUserKey);
+  }
+
   async signIn(email: string, password: string) {
     try {
-      const result = await this.afAuth.auth.signInWithEmailAndPassword(
+      const result = await this.angularFireAuth.auth.signInWithEmailAndPassword(
         email,
         password
       );
-      this.ngZone.run(() => {
-        this.router.navigate(["dashboard"]);
-      });
-      this.setUserData(result.user);
+      this.finishLogin(result);
     } catch (error) {
       window.alert(error.message);
     }
@@ -58,7 +59,7 @@ export class AuthService {
 
   async signUp(email: string, password: string) {
     try {
-      const result = await this.afAuth.auth.createUserWithEmailAndPassword(
+      const result = await this.angularFireAuth.auth.createUserWithEmailAndPassword(
         email,
         password
       );
@@ -70,13 +71,15 @@ export class AuthService {
   }
 
   async sendVerificationEmail() {
-    await this.afAuth.auth.currentUser.sendEmailVerification();
+    await this.angularFireAuth.auth.currentUser.sendEmailVerification();
     this.router.navigate(["verify-email-address"]);
   }
 
   async forgotPassword(passwordResetEmail: string): Promise<any> {
     try {
-      await this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail);
+      await this.angularFireAuth.auth.sendPasswordResetEmail(
+        passwordResetEmail
+      );
       return { message: "Reset email successfully sent" };
     } catch (error) {
       window.alert(error);
@@ -95,18 +98,15 @@ export class AuthService {
 
   async authLogin(provider: firebase.auth.AuthProvider) {
     try {
-      const result = await this.afAuth.auth.signInWithPopup(provider);
-      this.ngZone.run(() => {
-        this.router.navigate(["dashboard"]);
-      });
-      this.setUserData(result.user);
+      const result = await this.angularFireAuth.auth.signInWithPopup(provider);
+      this.finishLogin(result);
     } catch (error) {
       window.alert(error);
     }
   }
 
-  setUserData(user: User) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+  async setUserData(user: User) {
+    const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
       `users/${user.uid}`
     );
     const userData: User = {
@@ -122,8 +122,15 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.afAuth.auth.signOut();
-    localStorage.removeItem("user");
+    await this.angularFireAuth.auth.signOut();
+    this.removeLocalStorageUser();
     this.router.navigate(["sign-in"]);
+  }
+
+  async finishLogin(result: firebase.auth.UserCredential) {
+    await this.setUserData(result.user);
+    this.ngZone.run(() => {
+      this.router.navigate(["dashboard"]);
+    });
   }
 }
