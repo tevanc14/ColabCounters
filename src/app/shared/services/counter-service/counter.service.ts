@@ -5,7 +5,6 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 
-import { config } from "./../../../app.config";
 import { Counter } from "./../../model/counter";
 import { map } from "rxjs/operators";
 import { AuthService } from "../auth/auth.service";
@@ -17,7 +16,9 @@ export class CounterService {
 
   constructor(private db: AngularFirestore, public authService: AuthService) {
     this.collectionEndpoint = this.buildCollectionEndpoint();
-    this.counters = db.collection<Counter>(this.collectionEndpoint);
+    this.counters = db.collection<Counter>(this.collectionEndpoint, ref =>
+      ref.orderBy("name")
+    );
   }
 
   buildCollectionEndpoint() {

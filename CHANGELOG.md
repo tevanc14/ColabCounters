@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.5.0] - 2019-01-21
+
+Added
+
+- Sort counters by name
+
+Changed
+
+- Ran formatter on all files
+
 ## [0.4.0] - 2019-01-21
 
 Added
