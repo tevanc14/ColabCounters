@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Counter, Count, CountType } from "./../counter";
-import { CounterService } from "./../counter-service/counter.service";
+import { Counter, Count, CountType } from "../../shared/model/counter";
+import { CounterService } from "./../../shared/services/counter-service/counter.service";
 
 @Component({
   selector: "app-counter",

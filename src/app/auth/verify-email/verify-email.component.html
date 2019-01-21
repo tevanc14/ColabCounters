@@ -1,0 +1,32 @@
+<div class="verify-email-page"
+     fxLayoutAlign="center center">
+  <mat-card class="verify-email-card"
+            fxLayout="column">
+
+    <div class="mat-h1">
+      Thank you for registering!
+    </div>
+
+    <div *ngIf="authService.userData as user">
+      <div class="mat-h3">
+        A confirmation email has been sent to <strong>{{ user.email }}</strong>.
+      </div>
+      <div class="mat-h3">
+        Please check your email and click on the provided link to verify your email address.
+      </div>
+    </div>
+
+    <button mat-raised-button
+            class="login-redirect"
+            routerLink="/sign-in"
+            color="primary">
+      Return to login
+    </button>
+
+    <button mat-flat-button
+            class="resend-email-button"
+            (click)="resendVerificationEmail()"
+            color="accent">Resend verification email</button>
+
+  </mat-card>
+</div>

@@ -1,5 +1,12 @@
 <div class="counter-card" fxLayout="column" fxLayoutAlign="space-between">
-  <button mat-mini-fab (click)="delete(counter)" class="delete-button" color="warn">X</button>
+  <button
+    mat-mini-fab
+    (click)="delete(counter)"
+    class="delete-button"
+    color="warn"
+  >
+    X
+  </button>
   <h2 class="mat-h2">{{ counter.name }}</h2>
   <h1 class="mat-h1">{{ counter.totalCount }}</h1>
   <div fxLayout="row" fxLayoutAlign="space-between">

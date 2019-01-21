@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CounterDashboardComponent } from "./counter-dashboard.component";
+import { VerifyEmailComponent } from "./verify-email.component";
 
-describe("CounterDashboardComponent", () => {
-  let component: CounterDashboardComponent;
-  let fixture: ComponentFixture<CounterDashboardComponent>;
+describe("VerifyEmailComponent", () => {
+  let component: VerifyEmailComponent;
+  let fixture: ComponentFixture<VerifyEmailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CounterDashboardComponent]
+      declarations: [VerifyEmailComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CounterDashboardComponent);
+    fixture = TestBed.createComponent(VerifyEmailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

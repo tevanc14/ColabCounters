@@ -1,0 +1,7 @@
+<mat-toolbar color="primary">
+  <span>{{ title }}</span>
+  <button mat-flat-button
+          class="log-out-button"
+          (click)="authService.signOut()"
+          color="accent">Log out</button>
+</mat-toolbar>

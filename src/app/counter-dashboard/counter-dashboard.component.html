@@ -1,3 +1,4 @@
+<app-toolbar></app-toolbar>
 <div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
   <ng-container *ngFor="let counter of (counters | async)">
     <app-counter [counter]="counter"></app-counter>

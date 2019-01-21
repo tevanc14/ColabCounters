@@ -5,8 +5,8 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 
-import { config } from "../../app.config";
-import { Counter } from "../counter";
+import { config } from "./../../../app.config";
+import { Counter } from "./../../model/counter";
 import { map } from "rxjs/operators";
 
 @Injectable()

@@ -1,0 +1,51 @@
+<div class="sign-up-page"
+     fxLayoutAlign="center center">
+  <mat-card class="sign-up-card"
+            fxLayout="column">
+    <button mat-raised-button
+            class="sign-up-button"
+            color="accent"
+            (click)="authService.googleAuth()">
+      Continue with Google
+    </button>
+
+    <div class="or"
+         fxLayout="row">
+      <hr class="line" />
+      <div class="text">Or</div>
+      <hr class="line" />
+    </div>
+
+    <mat-form-field>
+      <mat-label>Email Address</mat-label>
+      <input matInput
+             [(ngModel)]="emailAddress"
+             type="text" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input matInput
+             [(ngModel)]="password"
+             type="password" />
+    </mat-form-field>
+
+    <button mat-raised-button
+            class="sign-up-button email-sign-up-button"
+            (click)="emailSignUp()"
+            color="primary">
+      Sign up with Email
+    </button>
+
+    <div class="divider">
+      <hr />
+    </div>
+
+    <div class="sign-in"
+         fxLayout="row"
+         fxLayoutAlign="space-between center">
+      <div>Already have an account?</div>
+      <button mat-stroked-button
+              routerLink="/sign-in">Log in</button>
+    </div>
+  </mat-card>
+</div>

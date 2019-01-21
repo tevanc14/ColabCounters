@@ -8,17 +8,20 @@ import { AppComponent } from "./app.component";
 import { MaterialModule } from "./material.module";
 import { environment } from "src/environments/environment";
 import { CounterDashboardModule } from "./counter-dashboard/counter-dashboard.module";
-import { ToolbarComponent } from "./toolbar/toolbar.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { AuthModule } from "./auth/auth.module";
 
 @NgModule({
-  declarations: [AppComponent, ToolbarComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    CounterDashboardModule
+    AppRoutingModule,
+    AuthModule,
+    BrowserAnimationsModule,
+    CounterDashboardModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { Counter } from "./counter";
-import { CounterService } from "./counter-service/counter.service";
+import { Counter } from "../shared/model/counter";
+import { CounterService } from "./../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
 import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
 

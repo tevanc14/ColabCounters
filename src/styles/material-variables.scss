@@ -1,0 +1,15 @@
+@import "~@angular/material/theming";
+
+@import "./themes/indigo-pink.scss";
+
+$current-theme: $light-theme;
+
+$theme-primary-map: map-get($current-theme, primary);
+$theme-primary: mat-color($theme-primary-map, default);
+$theme-primary-light: mat-color($theme-primary-map, lighter);
+$theme-primary-dark: mat-color($theme-primary-map, darker);
+
+$theme-accent-map: map-get($current-theme, accent);
+$theme-accent: mat-color($theme-accent-map, default);
+$theme-accent-light: mat-color($theme-accent-map, lighter);
+$theme-accent-dark: mat-color($theme-accent-map, darker);

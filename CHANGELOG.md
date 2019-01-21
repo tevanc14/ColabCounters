@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0] - 2019-01-21
+
+Added
+
+- Authentication
+  - Log in (Google or email/password)
+  - Sign up (Google or email/password)
+  - Password reset
+  - Email verification
+  - Log out button
+
 ## [0.2.2] - 2019-01-20
 
 Changed

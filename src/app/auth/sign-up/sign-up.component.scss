@@ -1,0 +1,63 @@
+@import "./../../../styles/material-variables.scss";
+
+$vertical-spacing: 20px;
+
+.sign-up-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: $theme-primary;
+}
+
+.sign-up-card {
+  padding: 40px;
+  width: 400px;
+  height: 500px;
+  background-color: white;
+}
+
+.sign-up-button {
+  width: 100%;
+  height: 60px;
+}
+
+.email-sign-up-button {
+  margin-top: $vertical-spacing;
+}
+
+.or {
+  padding-top: $vertical-spacing * 1.5;
+  padding-bottom: $vertical-spacing;
+}
+
+.or .line {
+  width: 45%;
+}
+
+.or .text {
+  color: #a0a0a0;
+}
+
+hr {
+  height: 1px;
+  border: none;
+  background-color: #e2e2e2;
+}
+
+.divider {
+  padding-top: $vertical-spacing;
+}
+
+.sign-in {
+  padding: 20px;
+}
+
+.sign-in .button {
+  background-color: $theme-primary-light;
+}
