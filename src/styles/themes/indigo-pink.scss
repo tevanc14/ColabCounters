@@ -2,20 +2,10 @@
 
 @include mat-core();
 
-$light-primary: mat-palette($mat-indigo);
-$light-accent: mat-palette($mat-pink);
-$light-theme: mat-light-theme($light-primary, $light-accent);
+$indigo-pink-light-primary: mat-palette($mat-indigo);
+$indigo-pink-light-accent: mat-palette($mat-pink);
+$indigo-pink-light-theme: mat-light-theme($indigo-pink-light-primary, $indigo-pink-light-accent);
 
-@include angular-material-theme($light-theme);
-
-$dark-primary: mat-palette($mat-blue-grey, 500);
-$dark-accent: mat-palette($mat-blue-grey, 900);
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent);
-
-.light-theme {
-  @include angular-material-theme($light-theme);
-}
-
-.dark-theme {
-  @include angular-material-theme($dark-theme);
-}
+$indigo-pink-dark-primary: mat-palette($mat-indigo);
+$indigo-pink-dark-accent: mat-palette($mat-pink);
+$indigo-pink-dark-theme: mat-dark-theme($indigo-pink-dark-primary, $indigo-pink-dark-accent);

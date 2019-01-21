@@ -40,7 +40,7 @@ export class CounterService {
 
   addCounter(name: string) {
     const id = this.db.createId();
-    const counter = new Counter(id, name, 0, []);
+    const counter = new Counter(id, name, 0, [], new Date());
     this.counters.doc(id).set(Object.assign({}, counter));
   }
 

@@ -27,10 +27,13 @@ export class CounterComponent implements OnInit {
   }
 
   updateTotalCount(newCount: number, counter: Counter, countType: CountType) {
-    counter.counts.push(
-      Object.assign({}, new Count(newCount, countType, new Date()))
-    );
-    const update = { totalCount: newCount, counts: counter.counts };
+    const now = new Date();
+    counter.counts.push(Object.assign({}, new Count(newCount, countType, now)));
+    const update = {
+      totalCount: newCount,
+      counts: counter.counts,
+      lastModified: now
+    };
     this.countersService.updateCounter(counter.id, update);
   }
 

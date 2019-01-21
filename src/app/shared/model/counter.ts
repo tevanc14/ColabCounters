@@ -16,6 +16,7 @@ export class Counter {
     public id: string,
     public name: string,
     public totalCount: number,
-    public counts: Array<Count>
+    public counts: Array<Count>,
+    public lastModified: Date
   ) {}
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.6.0] - 2019-01-21
+
+Changed
+
+- Have all appropriate colors be linked to the theme
+- Defaulting to dark theme
+- Deployment settings to be deployable
+- Database settings to be restricted
+
 ## [0.5.0] - 2019-01-21
 
 Added

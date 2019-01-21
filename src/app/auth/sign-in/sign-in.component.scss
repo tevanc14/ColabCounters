@@ -19,7 +19,6 @@ $vertical-spacing: 20px;
   padding: 40px;
   width: 400px;
   height: 540px;
-  background-color: white;
 }
 
 .log-in-button {
@@ -51,6 +50,7 @@ hr {
 }
 
 .forgot-password {
+  color: $theme-text;
   float: right;
   padding-bottom: $vertical-spacing;
 }

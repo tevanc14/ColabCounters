@@ -12,7 +12,7 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class AuthService {
-  userData: any;
+  userData: firebase.User;
   localStorageUserKey = "user";
 
   constructor(
@@ -25,16 +25,14 @@ export class AuthService {
       if (user) {
         this.userData = user;
         this.setLocalStorageUser(JSON.stringify(this.userData));
-        this.getLocalStorageUser();
       } else {
-        this.getLocalStorageUser();
         this.setLocalStorageUser(null);
       }
     });
   }
 
-  getLocalStorageUser() {
-    JSON.parse(localStorage.getItem(this.localStorageUserKey));
+  getLocalStorageUser(): firebase.User {
+    return JSON.parse(localStorage.getItem(this.localStorageUserKey));
   }
 
   setLocalStorageUser(user: string) {
@@ -88,8 +86,8 @@ export class AuthService {
   }
 
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem("user"));
-    return user !== null && user.emailVerified !== false ? true : false;
+    const user: firebase.User = this.getLocalStorageUser();
+    return user !== null && user.emailVerified !== false;
   }
 
   googleAuth() {
