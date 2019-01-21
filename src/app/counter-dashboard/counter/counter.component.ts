@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Counter, Count, CountType } from "../model/counter";
-import { CountersService } from "../service/counters.service";
+import { Counter, Count, CountType } from "./../counter";
+import { CounterService } from "./../counter-service/counter.service";
 
 @Component({
   selector: "app-counter",
@@ -10,7 +10,7 @@ import { CountersService } from "../service/counters.service";
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
 
-  constructor(private countersService: CountersService) {}
+  constructor(private countersService: CounterService) {}
 
   ngOnInit() {}
 

@@ -5,12 +5,12 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 
-import { config } from "./../app.config";
-import { Counter, Count } from "../model/counter";
+import { config } from "../../app.config";
+import { Counter } from "../counter";
 import { map } from "rxjs/operators";
 
 @Injectable()
-export class CountersService {
+export class CounterService {
   counters: AngularFirestoreCollection<Counter>;
 
   constructor(private db: AngularFirestore) {

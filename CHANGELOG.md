@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.2] - 2019-01-20
+
+Changed
+
+- Reorganize component structure
+- Separate counter dashboard components into own module
+- Moved all dashboard logic into own component and out of
+  app component
+- Keep create FAB at bottom when scrolling
+
 ## [0.2.1] - 2019-01-20
 
 Added

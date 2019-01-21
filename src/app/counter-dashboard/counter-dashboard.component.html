@@ -1,0 +1,8 @@
+<div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
+  <ng-container *ngFor="let counter of (counters | async)">
+    <app-counter [counter]="counter"></app-counter>
+  </ng-container>
+  <button mat-fab (click)="openDialog()" class="add-button" color="accent">
+    +
+  </button>
+</div>

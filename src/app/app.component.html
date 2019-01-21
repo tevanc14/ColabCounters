@@ -1,7 +1,2 @@
-<mat-toolbar color="primary"> <span>Counters</span> </mat-toolbar>
-<div fxLayout="row wrap" fxLayoutAlign="center space-evenly">
-  <ng-container *ngFor="let counter of (counters | async)">
-    <app-counter [counter]="counter"></app-counter>
-  </ng-container>
-  <button mat-fab (click)="openDialog()" class="add-button" color="primary">+</button>
-</div>
+<app-toolbar></app-toolbar>
+<app-counter-dashboard></app-counter-dashboard>

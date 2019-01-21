@@ -4,15 +4,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 export interface DialogData {
   newCounterName: string;
 }
-
 @Component({
-  selector: "app-counter-dialog",
-  templateUrl: "./counter-dialog.component.html",
-  styleUrls: ["./counter-dialog.component.scss"]
+  selector: "app-create-counter-dialog",
+  templateUrl: "./create-counter-dialog.component.html",
+  styleUrls: ["./create-counter-dialog.component.scss"]
 })
-export class CounterDialogComponent implements OnInit {
+export class CreateCounterDialogComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<CounterDialogComponent>,
+    public dialogRef: MatDialogRef<CreateCounterDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
