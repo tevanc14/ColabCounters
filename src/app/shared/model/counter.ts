@@ -3,6 +3,10 @@ export enum CountType {
   DECREMENT = "decrement"
 }
 
+export class Timestamp {
+  constructor(public seconds: number, public nanoseconds: number) {}
+}
+
 export class Count {
   constructor(
     public currentCount: number,

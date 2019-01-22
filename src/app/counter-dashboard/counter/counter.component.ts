@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Counter, Count, CountType } from "../../shared/model/counter";
 import { CounterService } from "./../../shared/services/counter-service/counter.service";
+import { MatDialog } from "@angular/material";
+import { CounterDetailsDialogComponent } from "../counter-details-dialog/counter-details-dialog.component";
 
 @Component({
   selector: "app-counter",
@@ -10,7 +12,10 @@ import { CounterService } from "./../../shared/services/counter-service/counter.
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
 
-  constructor(private countersService: CounterService) {}
+  constructor(
+    private counterService: CounterService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {}
 
@@ -34,10 +39,16 @@ export class CounterComponent implements OnInit {
       counts: counter.counts,
       lastModified: now
     };
-    this.countersService.updateCounter(counter.id, update);
+    this.counterService.updateCounter(counter.id, update);
   }
 
   delete(counter: Counter) {
-    this.countersService.deleteCounter(counter.id);
+    this.counterService.deleteCounter(counter.id);
+  }
+
+  openDetailsDialog() {
+    this.dialog.open(CounterDetailsDialogComponent, {
+      data: { counter: this.counter }
+    });
   }
 }

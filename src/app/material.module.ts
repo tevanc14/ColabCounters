@@ -6,6 +6,7 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
+  MatTabsModule,
   MatToolbarModule,
   MatSnackBarModule
 } from "@angular/material";
@@ -20,6 +21,7 @@ import { NgModule } from "@angular/core";
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatTabsModule,
     MatToolbarModule,
     MatSnackBarModule
   ],
@@ -31,6 +33,7 @@ import { NgModule } from "@angular/core";
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatTabsModule,
     MatToolbarModule,
     MatSnackBarModule
   ]

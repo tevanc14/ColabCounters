@@ -16,8 +16,7 @@ export class CounterDashboardComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateCounterDialogComponent, {

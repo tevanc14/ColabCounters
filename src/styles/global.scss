@@ -1,7 +1,9 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
 @import "./material-variables.scss";
 @import "./typography.scss";
 
-// TODO: Get rid of this if possible
+// TODO: Have a better way of doing this if possible
 body {
   margin: 0;
 }

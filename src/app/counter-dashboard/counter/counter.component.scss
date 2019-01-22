@@ -1,6 +1,7 @@
 @import "./../../../styles/material-variables.scss";
 
 $card-dimension: 250px;
+$button-offset: 40px;
 
 .counter-card {
   height: $card-dimension;
@@ -11,9 +12,16 @@ $card-dimension: 250px;
   text-align: center;
 }
 
-.delete-button {
-  $button-offset: 40px;
+.action-button {
   position: relative;
   top: -$button-offset;
+}
+
+.delete-button {
   left: $card-dimension - $button-offset;
+}
+
+.stats-button {
+  right: $button-offset * 2;
+  background-color: $theme-primary-dark;
 }

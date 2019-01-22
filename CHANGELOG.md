@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.7.0] - 2019-01-22
+
+Added
+
+- Graphs
+  - Line graph for cumulative counts
+  - Bar graph for daily counts
+
+Changed
+
+- Material icons
+
 ## [0.6.2] - 2019-01-21
 
 Removed

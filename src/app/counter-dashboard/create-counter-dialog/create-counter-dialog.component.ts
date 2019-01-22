@@ -15,9 +15,9 @@ export class CreateCounterDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
+  ngOnInit() {}
+
   onNoClick() {
     this.dialogRef.close();
   }
-
-  ngOnInit() {}
 }

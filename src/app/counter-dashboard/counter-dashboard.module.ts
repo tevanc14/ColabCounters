@@ -9,20 +9,24 @@ import { MaterialModule } from "../material.module";
 import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
 import { ToolbarComponent } from "./toolbar/toolbar.component";
 import { AppRoutingModule } from "../app-routing.module";
+import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
     CounterComponent,
     CounterDashboardComponent,
     CreateCounterDialogComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    CounterDetailsDialogComponent
   ],
   imports: [
     AppRoutingModule,
     CommonModule,
     FlexLayoutModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    NgxChartsModule
   ],
   exports: [
     CounterComponent,
@@ -31,6 +35,6 @@ import { AppRoutingModule } from "../app-routing.module";
     ToolbarComponent
   ],
   providers: [CounterService],
-  entryComponents: [CreateCounterDialogComponent]
+  entryComponents: [CreateCounterDialogComponent, CounterDetailsDialogComponent]
 })
 export class CounterDashboardModule {}
