@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.6.2] - 2019-01-21
+
+Removed
+
+- Firebase config to take it out of source control
+
 ## [0.6.1] - 2019-01-21
 
 Changed

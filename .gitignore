@@ -37,6 +37,7 @@ testem.log
 # Firebase
 .firebase/
 firebase-debug.log
+src/environments/environment*.ts
 
 # System Files
 .DS_Store
