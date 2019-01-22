@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1] - 2019-01-22
+
+Changed
+
+- Daily count stats take type into consideration so it shows
+  the net change on a day as opposed to total interactions
+- Taskbar doesn't have whitespace when on different views
+
 ## [0.7.0] - 2019-01-22
 
 Added

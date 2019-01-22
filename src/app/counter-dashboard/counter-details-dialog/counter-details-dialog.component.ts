@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { Counter, Count } from "src/app/shared/model/counter";
+import { Counter, Count, CountType } from "src/app/shared/model/counter";
 
 export interface DialogData {
   counter: Counter;
@@ -59,17 +59,36 @@ export class CounterDetailsDialogComponent implements OnInit {
   }
 
   buildDailyCounts() {
+    const dateBuckets: any = this.buildDateBuckets();
+    this.extractDailyCountsFromObject(dateBuckets);
+  }
+
+  buildDateBuckets() {
     const dateBuckets: any = {};
     this.data.counter.counts.forEach((count: Count) => {
       const dateString = this.timestampToDateString(count.timestamp);
 
-      if (dateBuckets[dateString]) {
-        dateBuckets[dateString]++;
-      } else {
-        dateBuckets[dateString] = 1;
+      if (!dateBuckets[dateString]) {
+        dateBuckets[dateString] = 0;
       }
+
+      dateBuckets[dateString] += this.discernCountOperation(count);
     });
 
+    return dateBuckets;
+  }
+
+  discernCountOperation(count: Count): number {
+    if (count.type === CountType.INCREMENT) {
+      return 1;
+    } else if (count.type === CountType.DECREMENT) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
+  extractDailyCountsFromObject(dateBuckets: []) {
     for (const key in dateBuckets) {
       if (dateBuckets.hasOwnProperty(key)) {
         this.dailyCounts.push({

@@ -1,8 +1,9 @@
 @import "./../../styles/material-variables.scss";
+@import "./../../styles/variables.scss";
 
 .dashboard-page {
   position: fixed;
-  top: 64px;
+  top: $toolbar-height;
   left: 0;
 
   padding: 0;

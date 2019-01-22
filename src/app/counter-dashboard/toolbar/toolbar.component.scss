@@ -1,3 +1,9 @@
+@import "./../../../styles/variables.scss";
+
+.toolbar {
+  height: $toolbar-height;
+}
+
 .log-out-button {
   position: absolute;
   right: 20px;
