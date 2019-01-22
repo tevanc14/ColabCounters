@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Observable } from "rxjs";
-import { Counter } from "../shared/model/counter";
 import { CounterService } from "./../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
 import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
@@ -11,17 +9,15 @@ import { CreateCounterDialogComponent } from "./create-counter-dialog/create-cou
   styleUrls: ["./counter-dashboard.component.scss"]
 })
 export class CounterDashboardComponent implements OnInit {
-  counters: Observable<Counter[]>;
   newCounterName: string;
 
   constructor(
-    private countersService: CounterService,
+    public counterService: CounterService,
     private dialog: MatDialog
-  ) {
-    this.counters = this.countersService.getCounters();
-  }
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateCounterDialogComponent, {
@@ -30,7 +26,7 @@ export class CounterDashboardComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.countersService.addCounter(result);
+        this.counterService.addCounter(result);
       }
     });
   }

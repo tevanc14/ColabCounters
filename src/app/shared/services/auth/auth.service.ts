@@ -7,12 +7,14 @@ import {
   AngularFirestoreDocument
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
+import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
   userData: firebase.User;
+  userData$: BehaviorSubject<firebase.User>;
   localStorageUserKey = "user";
 
   constructor(
@@ -21,22 +23,26 @@ export class AuthService {
     private router: Router,
     private ngZone: NgZone
   ) {
-    this.angularFireAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        this.setLocalStorageUser(JSON.stringify(this.userData));
+    this.angularFireAuth.authState.subscribe(userData => {
+      if (userData) {
+        this.userData = userData;
+        this.setLocalStorageUser(this.userData);
       } else {
         this.setLocalStorageUser(null);
       }
     });
   }
 
+  getUserData() {
+    return this.userData$.asObservable();
+  }
+
   getLocalStorageUser(): firebase.User {
     return JSON.parse(localStorage.getItem(this.localStorageUserKey));
   }
 
-  setLocalStorageUser(user: string) {
-    localStorage.setItem(this.localStorageUserKey, user);
+  setLocalStorageUser(user: firebase.User) {
+    localStorage.setItem(this.localStorageUserKey, JSON.stringify(user));
   }
 
   removeLocalStorageUser() {

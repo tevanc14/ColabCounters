@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1] - 2019-01-21
+
+Changed
+
+- Fixed bug where refreshing the page would not retrieve
+  counters from Firestore
+
 ## [0.6.0] - 2019-01-21
 
 Changed
