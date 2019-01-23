@@ -1,0 +1,24 @@
+.dialog-container {
+  height: 400px;
+}
+
+.left-panel {
+  width: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.right-panel {
+  position: relative;
+  width: 300px;
+}
+
+.email-input {
+  width: 100%;
+}
+
+.add-collaborator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}

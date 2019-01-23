@@ -12,16 +12,8 @@ $button-offset: 40px;
   text-align: center;
 }
 
-.action-button {
+.menu-button {
   position: relative;
   top: -$button-offset;
-}
-
-.delete-button {
   left: $card-dimension - $button-offset;
-}
-
-.stats-button {
-  right: $button-offset * 2;
-  background-color: $theme-primary-dark;
 }

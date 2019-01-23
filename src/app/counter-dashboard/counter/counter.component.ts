@@ -2,7 +2,8 @@ import { Component, OnInit, Input } from "@angular/core";
 import { Counter, Count, CountType } from "../../shared/model/counter";
 import { CounterService } from "./../../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
-import { CounterDetailsDialogComponent } from "../counter-details-dialog/counter-details-dialog.component";
+import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
+import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
 
 @Component({
   selector: "app-counter",
@@ -33,7 +34,12 @@ export class CounterComponent implements OnInit {
 
   updateTotalCount(newCount: number, counter: Counter, countType: CountType) {
     const now = new Date();
-    counter.counts.push(Object.assign({}, new Count(newCount, countType, now)));
+    counter.counts.push(
+      Object.assign(
+        {},
+        new Count(newCount, countType, now, this.counterService.user.uid)
+      )
+    );
     const update = {
       totalCount: newCount,
       counts: counter.counts,
@@ -48,6 +54,12 @@ export class CounterComponent implements OnInit {
 
   openDetailsDialog() {
     this.dialog.open(CounterDetailsDialogComponent, {
+      data: { counter: this.counter }
+    });
+  }
+
+  openCollaboratorDialog() {
+    this.dialog.open(CollaboratorDialogComponent, {
       data: { counter: this.counter }
     });
   }

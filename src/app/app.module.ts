@@ -10,7 +10,7 @@ import { environment } from "src/environments/environment";
 import { CounterDashboardModule } from "./counter-dashboard/counter-dashboard.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AuthModule } from "./auth/auth.module";
-import { AuthService } from "./shared/services/auth/auth.service";
+import { UserService } from "./shared/services/user/user.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,7 +24,7 @@ import { AuthService } from "./shared/services/auth/auth.service";
     CounterDashboardModule,
     MaterialModule
   ],
-  providers: [AuthService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

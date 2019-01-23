@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.8.0] - 2019-01-23
+
+Added
+
+- Add a collaborator (very sloppily for now)
+
+Changed
+
+- Refactored data structures for collaborative usage
+- Moved card actions into a menu
+
 ## [0.7.1] - 2019-01-22
 
 Changed

@@ -2,20 +2,28 @@
           fxLayout="column"
           fxLayoutAlign="space-between">
 
-  <div class="action-button"
-       fxLayout="row">
-    <button mat-mini-fab
-            (click)="delete(counter)"
-            class="delete-button"
-            color="warn">
-      <mat-icon>delete</mat-icon>
-    </button>
-    <button mat-mini-fab
-            class="stats-button"
+  <button mat-mini-fab
+          class="menu-button"
+          [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item
             (click)=openDetailsDialog()>
       <mat-icon>timeline</mat-icon>
+      <span>Statistics</span>
     </button>
-  </div>
+    <button mat-menu-item
+            (click)=openCollaboratorDialog()>
+      <mat-icon>group</mat-icon>
+      <span>Collaborate</span>
+    </button>
+    <button mat-menu-item
+            (click)="delete(counter)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
 
   <h2 class="mat-h2">{{ counter.name }}</h2>
   <h1 class="mat-h1">{{ counter.totalCount }}</h1>

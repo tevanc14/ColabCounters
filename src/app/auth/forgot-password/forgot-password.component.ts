@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UserService } from "src/app/shared/services/user/user.service";
 import { MatSnackBar } from "@angular/material";
 
 @Component({
@@ -10,12 +10,12 @@ import { MatSnackBar } from "@angular/material";
 export class ForgotPasswordComponent implements OnInit {
   emailAddress: string;
 
-  constructor(public authService: AuthService, public snackBar: MatSnackBar) {}
+  constructor(public userService: UserService, public snackBar: MatSnackBar) {}
 
   ngOnInit() {}
 
   async resetPassword() {
-    const emailStatus = await this.authService.forgotPassword(
+    const emailStatus = await this.userService.forgotPassword(
       this.emailAddress
     );
     if (!emailStatus.error) {

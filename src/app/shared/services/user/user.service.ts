@@ -1,21 +1,21 @@
 import { Injectable, NgZone } from "@angular/core";
-import { User } from "./../../model/user";
+import { User } from "../../model/user";
 import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
 import {
   AngularFirestore,
-  AngularFirestoreDocument
+  AngularFirestoreDocument,
+  AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { Observable, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
-export class AuthService {
+export class UserService {
   userData: firebase.User;
-  userData$: BehaviorSubject<firebase.User>;
   localStorageUserKey = "user";
+  users: Array<any> = [];
 
   constructor(
     private angularFirestore: AngularFirestore,
@@ -31,10 +31,7 @@ export class AuthService {
         this.setLocalStorageUser(null);
       }
     });
-  }
-
-  getUserData() {
-    return this.userData$.asObservable();
+    this.getUsers();
   }
 
   getLocalStorageUser(): firebase.User {
@@ -135,6 +132,15 @@ export class AuthService {
     await this.setUserData(result.user);
     this.ngZone.run(() => {
       this.router.navigate(["dashboard"]);
+    });
+  }
+
+  getUsers() {
+    const userRef: AngularFirestoreCollection<
+      any
+    > = this.angularFirestore.collection("users");
+    return userRef.valueChanges().forEach(user => {
+      this.users = this.users.concat(user);
     });
   }
 }

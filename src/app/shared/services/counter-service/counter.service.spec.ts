@@ -2,7 +2,7 @@ import { TestBed } from "@angular/core/testing";
 
 import { CounterService } from "./counter.service";
 
-describe("AuthService", () => {
+describe("UserService", () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it("should be created", () => {

@@ -4,7 +4,7 @@ import { SignInComponent } from "./sign-in/sign-in.component";
 import { SignUpComponent } from "./sign-up/sign-up.component";
 import { ForgotPasswordComponent } from "./forgot-password/forgot-password.component";
 import { VerifyEmailComponent } from "./verify-email/verify-email.component";
-import { AuthService } from "../shared/services/auth/auth.service";
+import { UserService } from "../shared/services/user/user.service";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireAuthModule } from "@angular/fire/auth";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -28,7 +28,7 @@ import { FormsModule } from "@angular/forms";
     FormsModule,
     MaterialModule
   ],
-  providers: [AuthService],
+  providers: [UserService],
   exports: [
     SignInComponent,
     SignUpComponent,

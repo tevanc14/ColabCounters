@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { AuthService } from "src/app/shared/services/auth/auth.service";
+import { UserService } from "src/app/shared/services/user/user.service";
 import { MatSnackBar } from "@angular/material";
 
 @Component({
@@ -8,7 +8,7 @@ import { MatSnackBar } from "@angular/material";
   styleUrls: ["./verify-email.component.scss"]
 })
 export class VerifyEmailComponent implements OnInit {
-  constructor(public authService: AuthService, public snackBar: MatSnackBar) {}
+  constructor(public userService: UserService, public snackBar: MatSnackBar) {}
 
   ngOnInit() {}
 
