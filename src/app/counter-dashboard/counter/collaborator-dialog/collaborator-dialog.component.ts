@@ -22,10 +22,10 @@ export class CollaboratorDialogComponent implements OnInit {
 
   collaboratorConfiguration = {
     emailAddress: "",
-    canDelete: false,
-    canRead: false,
-    canShare: false,
-    canWrite: false
+    canDelete: true,
+    canRead: true,
+    canShare: true,
+    canWrite: true
   };
 
   constructor(
@@ -89,6 +89,7 @@ export class CollaboratorDialogComponent implements OnInit {
   getUserFromEmail(emailAddress: string): User {
     for (const user of this.userService.users) {
       if (
+        !this.collaboratorIds.includes(user.email) &&
         user.email === emailAddress &&
         user.uid !== this.userService.userData.uid
       ) {

@@ -25,13 +25,13 @@ export class UserService {
   ) {
     this.angularFireAuth.authState.subscribe(userData => {
       if (userData) {
+        this.getUsers();
         this.userData = userData;
         this.setLocalStorageUser(this.userData);
       } else {
         this.setLocalStorageUser(null);
       }
     });
-    this.getUsers();
   }
 
   getLocalStorageUser(): firebase.User {

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.9.0] - 2019-01-23
+
+Changed
+
+- Disable collaboration permission switches as editing a collaborator is broken
+
 ## [0.8.0] - 2019-01-23
 
 Added
