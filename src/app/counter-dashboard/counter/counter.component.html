@@ -19,6 +19,7 @@
       <span>Collaborate</span>
     </button>
     <button mat-menu-item
+            *ngIf=createdByCurrentUser()
             (click)="delete(counter)">
       <mat-icon>delete</mat-icon>
       <span>Delete</span>

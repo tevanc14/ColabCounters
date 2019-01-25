@@ -4,6 +4,7 @@ import { CounterService } from "./../../shared/services/counter-service/counter.
 import { MatDialog } from "@angular/material";
 import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
 import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
+import { UserService } from "src/app/shared/services/user/user.service";
 
 @Component({
   selector: "app-counter",
@@ -15,6 +16,7 @@ export class CounterComponent implements OnInit {
 
   constructor(
     private counterService: CounterService,
+    private userService: UserService,
     private dialog: MatDialog
   ) {}
 
@@ -37,7 +39,7 @@ export class CounterComponent implements OnInit {
     counter.counts.push(
       Object.assign(
         {},
-        new Count(newCount, countType, now, this.counterService.user.uid)
+        new Count(newCount, countType, now, this.userService.user.userId)
       )
     );
     const update = {
@@ -45,11 +47,11 @@ export class CounterComponent implements OnInit {
       counts: counter.counts,
       lastModified: now
     };
-    this.counterService.updateCounter(counter.id, update);
+    this.counterService.updateCounter(counter.counterId, update);
   }
 
   delete(counter: Counter) {
-    this.counterService.deleteCounter(counter.id);
+    this.counterService.deleteCounter(counter);
   }
 
   openDetailsDialog() {
@@ -62,5 +64,9 @@ export class CounterComponent implements OnInit {
     this.dialog.open(CollaboratorDialogComponent, {
       data: { counter: this.counter }
     });
+  }
+
+  createdByCurrentUser() {
+    return this.counter.createdBy === this.userService.user.userId;
   }
 }

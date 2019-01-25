@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.10.0] - 2019-01-24
+
+Added
+
+- Add a `countersCreated` property to the user
+- Limit the number of counters you may create to 10 (for now)
+
+Changed
+
+- Database field name changes as the fields get used in many places and could be confused:
+  - `users/uid` -> `users/userId`
+  - `counters/id` -> `counters/counterId`
+
 ## [0.9.0] - 2019-01-23
 
 Changed

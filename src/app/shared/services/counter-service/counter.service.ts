@@ -6,30 +6,21 @@ import {
 } from "@angular/fire/firestore";
 
 import { Counter, Collaborator, CounterStatus } from "./../../model/counter";
-import { AngularFireAuth } from "@angular/fire/auth";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { firestore } from "firebase/app";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class CounterService {
   counterCollection: AngularFirestoreCollection<Counter>;
   counters: Observable<any>;
-  user: firebase.User;
 
-  constructor(
-    private angularFireAuth: AngularFireAuth,
-    private db: AngularFirestore
-  ) {
-    angularFireAuth.authState.subscribe(userData => {
-      if (userData) {
-        this.user = userData;
-        this.counterCollection = db.collection<Counter>("counters", ref =>
-          ref.orderBy("name")
-        );
-        this.counters = this.getCounters();
-      }
-    });
+  constructor(private db: AngularFirestore, public userService: UserService) {
+    this.counterCollection = db.collection<Counter>("counters", ref =>
+      ref.orderBy("name")
+    );
+    this.counters = this.getCounters();
   }
 
   getCounters() {
@@ -44,7 +35,7 @@ export class CounterService {
 
   checkCollaborators(collaborators: Array<Collaborator>): boolean {
     for (const collaborator of collaborators) {
-      if (collaborator.userId === this.user.uid) {
+      if (collaborator.userId === this.userService.user.userId) {
         return true;
       }
     }
@@ -52,34 +43,38 @@ export class CounterService {
   }
 
   addCounter(name: string) {
-    const id: string = this.db.createId();
-    const counter = this.buildDefaultCounter(name, id);
-    this.counterCollection.doc(id).set(JSON.parse(JSON.stringify(counter)));
+    if (this.userService.user.activeCreatedCounters < 10) {
+      const id: string = this.db.createId();
+      const counter = this.buildDefaultCounter(name, id);
+      this.counterCollection.doc(id).set(JSON.parse(JSON.stringify(counter)));
+      this.userService.changeActiveCreatedCounters(counter.createdBy, 1);
+    }
   }
 
-  buildDefaultCounter(name: string, id: string) {
+  buildDefaultCounter(name: string, counterId: string) {
     return new Counter(
-      id,
+      counterId,
       name,
       0,
       [],
       new Date(),
-      [new Collaborator(this.user.uid, true, true, true, true)],
+      [new Collaborator(this.userService.user.userId, true, true, true)],
       CounterStatus.ACTIVE,
-      this.user.uid
+      this.userService.user.userId
     );
   }
 
-  updateCounter(id: string, update: Partial<Counter>) {
-    this.counterCollection.doc(id).update(update);
+  updateCounter(counterId: string, update: Partial<Counter>) {
+    this.counterCollection.doc(counterId).update(update);
   }
 
-  deleteCounter(counterId: string) {
+  deleteCounter(counter: Counter) {
     const counterDoc: AngularFirestoreDocument<Counter> = this.db.doc<Counter>(
-      `counters/${counterId}`
+      `counters/${counter.counterId}`
     );
 
     counterDoc.delete();
+    this.userService.changeActiveCreatedCounters(counter.createdBy, -1);
   }
 
   addCollaborator(counterId: string, collaborator: Collaborator) {
@@ -87,6 +82,13 @@ export class CounterService {
       collaborators: firestore.FieldValue.arrayUnion(
         Object.assign({}, collaborator)
       )
+    });
+  }
+
+  updateCountersCreated(userId: string, activeCreatedCounters: number) {
+    console.log(userId, activeCreatedCounters);
+    this.userService.updateCountersCreated(userId, {
+      activeCreatedCounters: activeCreatedCounters
     });
   }
 }

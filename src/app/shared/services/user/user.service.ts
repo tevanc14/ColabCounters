@@ -13,32 +13,35 @@ import { Router } from "@angular/router";
   providedIn: "root"
 })
 export class UserService {
-  userData: firebase.User;
+  user: User;
   localStorageUserKey = "user";
   users: Array<any> = [];
+  userCollection: AngularFirestoreCollection<User>;
 
   constructor(
     private angularFirestore: AngularFirestore,
     private angularFireAuth: AngularFireAuth,
+    private db: AngularFirestore,
     private router: Router,
     private ngZone: NgZone
   ) {
+    this.userCollection = db.collection<User>("users");
     this.angularFireAuth.authState.subscribe(userData => {
       if (userData) {
         this.getUsers();
-        this.userData = userData;
-        this.setLocalStorageUser(this.userData);
+        this.user = new User(userData);
+        this.setLocalStorageUser(this.user);
       } else {
         this.setLocalStorageUser(null);
       }
     });
   }
 
-  getLocalStorageUser(): firebase.User {
+  getLocalStorageUser(): User {
     return JSON.parse(localStorage.getItem(this.localStorageUserKey));
   }
 
-  setLocalStorageUser(user: firebase.User) {
+  setLocalStorageUser(user: User) {
     localStorage.setItem(this.localStorageUserKey, JSON.stringify(user));
   }
 
@@ -65,22 +68,20 @@ export class UserService {
         password
       );
       this.sendVerificationEmail();
-      this.setUserData(result.user);
+      this.setUserData(new User(result.user));
     } catch (error) {
       window.alert(error.message);
     }
   }
 
-  async sendVerificationEmail() {
-    await this.angularFireAuth.auth.currentUser.sendEmailVerification();
+  sendVerificationEmail() {
+    this.angularFireAuth.auth.currentUser.sendEmailVerification();
     this.router.navigate(["verify-email-address"]);
   }
 
-  async forgotPassword(passwordResetEmail: string): Promise<any> {
+  forgotPassword(passwordResetEmail: string) {
     try {
-      await this.angularFireAuth.auth.sendPasswordResetEmail(
-        passwordResetEmail
-      );
+      this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail);
       return { message: "Reset email successfully sent" };
     } catch (error) {
       window.alert(error);
@@ -89,7 +90,7 @@ export class UserService {
   }
 
   get isLoggedIn(): boolean {
-    const user: firebase.User = this.getLocalStorageUser();
+    const user: User = this.getLocalStorageUser();
     return user !== null && user.emailVerified !== false;
   }
 
@@ -106,30 +107,31 @@ export class UserService {
     }
   }
 
-  async setUserData(user: User) {
+  setUserData(user: User) {
     const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
-      `users/${user.uid}`
+      `users/${user.userId}`
     );
     const userData: User = {
-      uid: user.uid,
-      email: user.email,
+      userId: user.userId,
+      emailAddress: user.emailAddress,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
+      activeCreatedCounters: user.activeCreatedCounters
     };
     return userRef.set(userData, {
       merge: true
     });
   }
 
-  async signOut() {
-    await this.angularFireAuth.auth.signOut();
+  signOut() {
+    this.angularFireAuth.auth.signOut();
     this.removeLocalStorageUser();
     this.router.navigate(["sign-in"]);
   }
 
-  async finishLogin(result: firebase.auth.UserCredential) {
-    await this.setUserData(result.user);
+  finishLogin(result: firebase.auth.UserCredential) {
+    this.setUserData(new User(result.user));
     this.ngZone.run(() => {
       this.router.navigate(["dashboard"]);
     });
@@ -141,6 +143,29 @@ export class UserService {
     > = this.angularFirestore.collection("users");
     return userRef.valueChanges().forEach(user => {
       this.users = this.users.concat(user);
+    });
+  }
+
+  updateCountersCreated(userId: string, update: Partial<User>) {
+    this.userCollection.doc(userId).update(update);
+  }
+
+  changeActiveCreatedCounters(userId: string, change: number) {
+    const userDocRef = this.db.firestore.collection("users").doc(userId);
+
+    return this.db.firestore.runTransaction(async transaction => {
+      return transaction
+        .get(userDocRef)
+        .then(userDoc => {
+          const newCount = userDoc.data().activeCreatedCounters + change;
+          transaction.update(userDocRef, { activeCreatedCounters: newCount });
+        })
+        .then(() => {
+          // Transaction successful
+        })
+        .catch(error => {
+          console.log("Transaction failed: ", error);
+        });
     });
   }
 }

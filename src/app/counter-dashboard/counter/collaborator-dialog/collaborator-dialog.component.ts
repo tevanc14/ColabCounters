@@ -2,8 +2,6 @@ import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { Counter, Collaborator } from "src/app/shared/model/counter";
 import { UserService } from "src/app/shared/services/user/user.service";
-import { map } from "rxjs/operators";
-import { Observable } from "rxjs";
 import { User } from "src/app/shared/model/user";
 import { CounterService } from "src/app/shared/services/counter-service/counter.service";
 
@@ -22,7 +20,6 @@ export class CollaboratorDialogComponent implements OnInit {
 
   collaboratorConfiguration = {
     emailAddress: "",
-    canDelete: true,
     canRead: true,
     canShare: true,
     canWrite: true
@@ -55,8 +52,8 @@ export class CollaboratorDialogComponent implements OnInit {
 
     for (const user of this.userService.users) {
       if (
-        this.collaboratorIds.includes(user.uid) &&
-        user.uid !== this.userService.userData.uid
+        this.collaboratorIds.includes(user.userId) &&
+        user.userId !== this.userService.user.userId
       ) {
         collaborators.push(user);
       }
@@ -72,13 +69,12 @@ export class CollaboratorDialogComponent implements OnInit {
 
     if (user) {
       this.counterService.addCollaborator(
-        this.data.counter.id,
+        this.data.counter.counterId,
         new Collaborator(
-          user.uid,
+          user.userId,
           this.collaboratorConfiguration.canRead,
           this.collaboratorConfiguration.canWrite,
-          this.collaboratorConfiguration.canShare,
-          this.collaboratorConfiguration.canDelete
+          this.collaboratorConfiguration.canShare
         )
       );
 
@@ -91,7 +87,7 @@ export class CollaboratorDialogComponent implements OnInit {
       if (
         !this.collaboratorIds.includes(user.email) &&
         user.email === emailAddress &&
-        user.uid !== this.userService.userData.uid
+        user.userId !== this.userService.user.userId
       ) {
         return user;
       }
@@ -100,16 +96,15 @@ export class CollaboratorDialogComponent implements OnInit {
 
   populateConfiguration(user: User) {
     const collaborator = this.getCollaboratorFromUser(user);
-    this.collaboratorConfiguration.emailAddress = user.email;
+    this.collaboratorConfiguration.emailAddress = user.emailAddress;
     this.collaboratorConfiguration.canRead = collaborator.canRead;
     this.collaboratorConfiguration.canWrite = collaborator.canWrite;
     this.collaboratorConfiguration.canShare = collaborator.canShare;
-    this.collaboratorConfiguration.canDelete = collaborator.canDelete;
   }
 
   getCollaboratorFromUser(user: User): Collaborator {
     for (const collaborator of this.data.counter.collaborators) {
-      if (collaborator.userId === user.uid) {
+      if (collaborator.userId === user.userId) {
         return collaborator;
       }
     }
