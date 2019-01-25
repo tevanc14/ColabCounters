@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.11.1] - 2019-02-25
+
+Added
+
+- Vertical scrolling on counter dashboard
+
 ## [0.11.0] - 2019-01-24
 
 Changed
