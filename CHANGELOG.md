@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0] - 2019-01-24
+
+Changed
+
+- Show all collaborators in the dialog
+- Notate which user created the dialog
+
 ## [0.10.0] - 2019-01-24
 
 Added

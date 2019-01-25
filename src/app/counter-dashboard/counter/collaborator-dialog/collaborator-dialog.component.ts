@@ -15,8 +15,9 @@ export interface DialogData {
   styleUrls: ["./collaborator-dialog.component.scss"]
 })
 export class CollaboratorDialogComponent implements OnInit {
-  users: Array<User>;
+  collaboratorUsers: Array<User>;
   collaboratorIds: Array<string>;
+  counter: Counter;
 
   collaboratorConfiguration = {
     emailAddress: "",
@@ -31,8 +32,9 @@ export class CollaboratorDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CollaboratorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
+    this.counter = this.data.counter;
     this.collaboratorIds = this.getCollaboratorIds();
-    this.users = this.getUsers();
+    this.collaboratorUsers = this.getCollaborators();
   }
 
   ngOnInit() {}
@@ -40,21 +42,18 @@ export class CollaboratorDialogComponent implements OnInit {
   getCollaboratorIds() {
     const collaboratorIds = [];
 
-    for (const collaborator of this.data.counter.collaborators) {
+    for (const collaborator of this.counter.collaborators) {
       collaboratorIds.push(collaborator.userId);
     }
 
     return collaboratorIds;
   }
 
-  getUsers() {
+  getCollaborators() {
     const collaborators = [];
 
     for (const user of this.userService.users) {
-      if (
-        this.collaboratorIds.includes(user.userId) &&
-        user.userId !== this.userService.user.userId
-      ) {
+      if (this.collaboratorIds.includes(user.userId)) {
         collaborators.push(user);
       }
     }
@@ -69,7 +68,7 @@ export class CollaboratorDialogComponent implements OnInit {
 
     if (user) {
       this.counterService.addCollaborator(
-        this.data.counter.counterId,
+        this.counter.counterId,
         new Collaborator(
           user.userId,
           this.collaboratorConfiguration.canRead,
@@ -103,10 +102,14 @@ export class CollaboratorDialogComponent implements OnInit {
   }
 
   getCollaboratorFromUser(user: User): Collaborator {
-    for (const collaborator of this.data.counter.collaborators) {
+    for (const collaborator of this.counter.collaborators) {
       if (collaborator.userId === user.userId) {
         return collaborator;
       }
     }
+  }
+
+  isCreator(user: User) {
+    return user.userId === this.counter.createdBy;
   }
 }
