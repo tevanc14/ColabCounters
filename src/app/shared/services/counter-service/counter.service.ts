@@ -52,15 +52,17 @@ export class CounterService {
   }
 
   buildDefaultCounter(name: string, counterId: string) {
+    const now = new Date();
     return new Counter(
       counterId,
       name,
       0,
       [],
-      new Date(),
+      now,
       [new Collaborator(this.userService.user.userId, true, true, true)],
       CounterStatus.ACTIVE,
-      this.userService.user.userId
+      this.userService.user.userId,
+      now
     );
   }
 

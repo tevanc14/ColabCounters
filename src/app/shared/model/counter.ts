@@ -35,6 +35,7 @@ export class Counter {
     public lastModified: Date,
     public collaborators: Array<Collaborator>,
     public status: CounterStatus,
-    public createdBy: string
+    public createdBy: string,
+    public dateCreated: Date
   ) {}
 }

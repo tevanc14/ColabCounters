@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.15.0] - 2019-01-26
+
+Added
+
+- Date created on counter
+
 ## [0.14.0] - 2019-01-26
 
 Added
