@@ -20,7 +20,8 @@ export class CounterDashboardComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateCounterDialogComponent, {
-      data: { newCounterName: this.newCounterName }
+      data: { newCounterName: this.newCounterName },
+      height: "210px"
     });
 
     dialogRef.afterClosed().subscribe(result => {

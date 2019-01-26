@@ -1,8 +1,9 @@
 <h1 mat-dialog-title>New Counter</h1>
 <div mat-dialog-content>
-  <p class="mat-body">What is the name of the new counter?</p>
   <mat-form-field>
+    <mat-label>Name</mat-label>
     <input matInput
+           class="counter-name"
            [(ngModel)]="data.newCounterName"
            maxLength="50" />
   </mat-form-field>

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.1] - 2019-01-26
+
+Changed
+
+- Clean up and unify some text labels
+
 ## [0.13.0] - 2019-01-26
 
 Added
