@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.13.0] - 2019-01-26
+
+Added
+
+- Loading spinner on counter dashboard
+
 ## [0.12.0] - 2019-01-26
 
 Added

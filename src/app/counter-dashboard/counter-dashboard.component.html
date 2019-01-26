@@ -2,13 +2,24 @@
 <div class="dashboard-page"
      fxLayout="row wrap"
      fxLayoutAlign="center space-evenly">
-  <ng-container *ngFor="let counter of (counterService.counters | async)">
-    <app-counter [counter]="counter"></app-counter>
+
+  <ng-container *ngIf="(counterService.counters$ | async) as counters; else loading">
+    <!-- <ng-container *ngIf="false; else loading"> -->
+    <ng-container *ngFor="let counter of counters">
+      <app-counter [counter]="counter"></app-counter>
+    </ng-container>
+    <button mat-fab
+            (click)="openDialog()"
+            class="add-button"
+            color="accent">
+      <mat-icon>add</mat-icon>
+    </button>
   </ng-container>
-  <button mat-fab
-          (click)="openDialog()"
-          class="add-button"
-          color="accent">
-    <mat-icon>add</mat-icon>
-  </button>
+
+  <ng-template #loading>
+    <mat-progress-spinner class="loading-spinner"
+                          color="accent"
+                          mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
 </div>

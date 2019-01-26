@@ -9,10 +9,11 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
-  MatTabsModule,
-  MatToolbarModule,
+  MatProgressSpinnerModule,
   MatSlideToggleModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -28,10 +29,11 @@ import { NgModule } from "@angular/core";
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatTabsModule,
-    MatToolbarModule,
+    MatProgressSpinnerModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule
   ],
   exports: [
     MatButtonModule,
@@ -44,10 +46,11 @@ import { NgModule } from "@angular/core";
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatTabsModule,
-    MatToolbarModule,
+    MatProgressSpinnerModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule
   ]
 })
 export class MaterialModule {}

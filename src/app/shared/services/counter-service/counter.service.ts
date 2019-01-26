@@ -14,13 +14,13 @@ import { UserService } from "../user/user.service";
 @Injectable()
 export class CounterService {
   counterCollection: AngularFirestoreCollection<Counter>;
-  counters: Observable<any>;
+  counters$: Observable<any>;
 
   constructor(private db: AngularFirestore, public userService: UserService) {
     this.counterCollection = db.collection<Counter>("counters", ref =>
       ref.orderBy("name")
     );
-    this.counters = this.getCounters();
+    this.counters$ = this.getCounters();
   }
 
   getCounters() {
