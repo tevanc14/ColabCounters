@@ -1,10 +1,21 @@
 @import "./../../../styles/variables.scss";
 
+$icon-dimension: 40px;
+
 .toolbar {
   height: $toolbar-height;
 }
 
-.log-out-button {
+.icon {
+  font-size: $icon-dimension;
   position: absolute;
   right: 20px;
+}
+
+.google-photo {
+  width: $icon-dimension;
+  height: $icon-dimension;
+  background-size: cover;
+  background-position: top center;
+  border-radius: 50%;
 }

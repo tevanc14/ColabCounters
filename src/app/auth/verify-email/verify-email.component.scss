@@ -1,7 +1,7 @@
 @import "./../shared-auth.scss";
 
 .verify-email-card {
-  height: $card-width + $card-padding;
+  height: $card-width + $card-padding !important;
 }
 
 .no-user-card {

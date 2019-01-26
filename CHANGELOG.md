@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.12.0] - 2019-01-26
+
+Added
+
+- Changed logout button to avatar with menu
+  - Either Google photo
+  - Or generic person icon
+
 ## [0.11.3] - 2019-01-26
 
 Added

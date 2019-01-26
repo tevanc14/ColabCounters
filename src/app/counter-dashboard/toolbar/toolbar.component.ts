@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/shared/services/user/user.service";
+import { User } from "src/app/shared/model/user";
 
 @Component({
   selector: "app-toolbar",
@@ -12,4 +13,8 @@ export class ToolbarComponent implements OnInit {
   constructor(public userService: UserService) {}
 
   ngOnInit() {}
+
+  hasUserPhoto(user: User) {
+    return user.photoURL === null;
+  }
 }

@@ -8,12 +8,14 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
+import { Observable, of } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
   user: User;
+  user$: Observable<User>;
   localStorageUserKey = "user";
   users: Array<any> = [];
   userCollection: AngularFirestoreCollection<User>;
@@ -30,6 +32,7 @@ export class UserService {
       if (userData) {
         this.getUsers();
         this.user = new User(userData);
+        this.user$ = of(this.user);
         this.setLocalStorageUser(this.user);
       } else {
         this.setLocalStorageUser(null);
