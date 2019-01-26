@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { CounterComponent } from "./counter/counter.component";
 import { CounterDashboardComponent } from "./counter-dashboard.component";
 import { CounterService } from "./../shared/services/counter-service/counter.service";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from "../material.module";
 import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
@@ -28,7 +28,9 @@ import { CollaboratorDialogComponent } from "./counter/collaborator-dialog/colla
     FlexLayoutModule,
     FormsModule,
     MaterialModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     CounterComponent,

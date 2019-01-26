@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.14.0] - 2019-01-26
+
+Added
+
+- Input validation on counter creation dialog
+
+Removed
+
+- Passing in non existent and unused data into the counter creation dialog
+
 ## [0.13.1] - 2019-01-26
 
 Changed

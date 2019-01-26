@@ -19,10 +19,7 @@ export class CounterDashboardComponent implements OnInit {
   ngOnInit() {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(CreateCounterDialogComponent, {
-      data: { newCounterName: this.newCounterName },
-      height: "210px"
-    });
+    const dialogRef = this.dialog.open(CreateCounterDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

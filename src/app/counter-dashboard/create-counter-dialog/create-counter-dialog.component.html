@@ -1,21 +1,30 @@
-<h1 mat-dialog-title>New Counter</h1>
-<div mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Name</mat-label>
-    <input matInput
-           class="counter-name"
-           [(ngModel)]="data.newCounterName"
-           maxLength="50" />
-  </mat-form-field>
-</div>
-<div mat-dialog-actions
-     fxLayout="row"
-     fxLayoutAlign="space-between">
-  <button mat-button
-          (click)="onNoClick()">Cancel</button>
-  <button mat-raised-button
-          color="primary"
-          [mat-dialog-close]="data.newCounterName">
-    Create
-  </button>
+<div fxLayout="column"
+     fxLayoutAlign="space-evenly">
+  <h1 mat-dialog-title>New Counter</h1>
+  <div mat-dialog-content>
+    <mat-form-field hintLabel="Max 50 characters">
+      <mat-label>Name</mat-label>
+      <textarea matInput
+                class="counter-name"
+                maxLength="50"
+                matAutosizeMinRows=1
+                matTextareaAutosize
+                [formControl]="counterName"
+                required>
+    </textarea>
+    <mat-error *ngIf="counterName.invalid">{{ getErrorMessage() }}</mat-error>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions
+       fxLayout="row"
+       fxLayoutAlign="space-between">
+    <button mat-button
+            (click)="cancel()">Cancel</button>
+    <button mat-raised-button
+            type="submit"
+            color="primary"
+            (click)="create()">
+      Create
+    </button>
+  </div>
 </div>

@@ -1,23 +1,32 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
+import { Component, OnInit } from "@angular/core";
+import { MatDialogRef } from "@angular/material";
+import { FormControl, Validators } from "@angular/forms";
 
-export interface DialogData {
-  newCounterName: string;
-}
 @Component({
   selector: "app-create-counter-dialog",
   templateUrl: "./create-counter-dialog.component.html",
   styleUrls: ["./create-counter-dialog.component.scss"]
 })
 export class CreateCounterDialogComponent implements OnInit {
+  counterName = new FormControl("", [Validators.required]);
+
   constructor(
-    public dialogRef: MatDialogRef<CreateCounterDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    public dialogRef: MatDialogRef<CreateCounterDialogComponent>
   ) {}
 
   ngOnInit() {}
 
-  onNoClick() {
+  cancel() {
     this.dialogRef.close();
+  }
+
+  create() {
+    if (!this.counterName.invalid) {
+      this.dialogRef.close(this.counterName.value);
+    }
+  }
+
+  getErrorMessage(): string {
+    return "Must enter a value";
   }
 }
