@@ -28,13 +28,11 @@ const routes: Routes = [
   },
   {
     path: "forgot-password",
-    component: ForgotPasswordComponent,
-    canActivate: [SecureInnerPagesGuard]
+    component: ForgotPasswordComponent
   },
   {
     path: "verify-email-address",
-    component: VerifyEmailComponent,
-    canActivate: [SecureInnerPagesGuard]
+    component: VerifyEmailComponent
   }
 ];
 

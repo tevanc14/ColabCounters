@@ -1,15 +1,18 @@
-<div class="sign-in-page" fxLayoutAlign="center center">
-  <mat-card class="sign-in-card" fxLayout="column">
-    <button
-      mat-raised-button
-      class="log-in-button"
-      color="accent"
-      (click)="userService.googleAuth()"
-    >
+<div class="auth-page"
+     fxLayoutAlign="center center"
+     fxLayout="column">
+  <div class="mat-display-3 app-title">Colab Counters</div>
+  <mat-card class="auth-card-tall"
+            fxLayout="column">
+    <button mat-raised-button
+            class="action-button"
+            color="accent"
+            (click)="userService.googleAuth()">
       Log in with Google
     </button>
 
-    <div class="or" fxLayout="row">
+    <div class="or"
+         fxLayout="row">
       <hr class="line" />
       <div class="text">Or</div>
       <hr class="line" />
@@ -17,31 +20,38 @@
 
     <mat-form-field>
       <mat-label>Email Address</mat-label>
-      <input matInput [(ngModel)]="emailAddress" type="text" />
+      <input matInput
+             [(ngModel)]="emailAddress"
+             type="text" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="password" type="password" />
+      <input matInput
+             [(ngModel)]="password"
+             type="password" />
     </mat-form-field>
 
     <a routerLink="/forgot-password">
       <div class="mat-small forgot-password">Forgot password?</div>
     </a>
 
-    <button
-      mat-raised-button
-      class="log-in-button"
-      (click)="emailSignIn()"
-      color="primary"
-    >
+    <button mat-raised-button
+            class="action-button"
+            (click)="emailSignIn()"
+            color="primary">
       Log in
     </button>
 
-    <div class="divider"><hr /></div>
+    <div class="divider">
+      <hr />
+    </div>
 
-    <div class="sign-up" fxLayout="row" fxLayoutAlign="space-between center">
+    <div class="redirect-button"
+         fxLayout="row"
+         fxLayoutAlign="space-between center">
       <div>Don't have an account?</div>
-      <button mat-stroked-button routerLink="/register-user">Sign up</button>
+      <button mat-stroked-button
+              routerLink="/register-user">Sign up</button>
     </div>
   </mat-card>
 </div>

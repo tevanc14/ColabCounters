@@ -7,7 +7,7 @@ import { UserService } from "src/app/shared/services/user/user.service";
   styleUrls: ["./toolbar.component.scss"]
 })
 export class ToolbarComponent implements OnInit {
-  title = "Counters";
+  title = "Colab Counters";
 
   constructor(public userService: UserService) {}
 

@@ -1,15 +1,18 @@
-<div class="sign-up-page" fxLayoutAlign="center center">
-  <mat-card class="sign-up-card" fxLayout="column">
-    <button
-      mat-raised-button
-      class="sign-up-button"
-      color="accent"
-      (click)="userService.googleAuth()"
-    >
+<div class="auth-page"
+     fxLayoutAlign="center center"
+     fxLayout="column">
+  <div class="mat-display-3 app-title">Colab Counters</div>
+  <mat-card class="auth-card-tall"
+            fxLayout="column">
+    <button mat-raised-button
+            class="action-button"
+            color="accent"
+            (click)="userService.googleAuth()">
       Continue with Google
     </button>
 
-    <div class="or" fxLayout="row">
+    <div class="or"
+         fxLayout="row">
       <hr class="line" />
       <div class="text">Or</div>
       <hr class="line" />
@@ -17,27 +20,35 @@
 
     <mat-form-field>
       <mat-label>Email Address</mat-label>
-      <input matInput [(ngModel)]="emailAddress" type="text" />
+      <input matInput
+             [(ngModel)]="emailAddress"
+             type="text" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="password" type="password" />
+      <input matInput
+             [(ngModel)]="password"
+             type="password" />
     </mat-form-field>
 
-    <button
-      mat-raised-button
-      class="sign-up-button email-sign-up-button"
-      (click)="emailSignUp()"
-      color="primary"
-    >
+    <button mat-raised-button
+            class="action-button"
+            id="email-sign-up-button"
+            (click)="emailSignUp()"
+            color="primary">
       Sign up with Email
     </button>
 
-    <div class="divider"><hr /></div>
+    <div class="divider">
+      <hr />
+    </div>
 
-    <div class="sign-in" fxLayout="row" fxLayoutAlign="space-between center">
-      <div>Already have an account?</div>
-      <button mat-stroked-button routerLink="/sign-in">Log in</button>
+    <div class="redirect-button"
+         fxLayout="row"
+         fxLayoutAlign="space-between center">
+      <div>Have an account?</div>
+      <button mat-stroked-button
+              routerLink="/sign-in">Log in</button>
     </div>
   </mat-card>
 </div>

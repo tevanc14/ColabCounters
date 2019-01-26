@@ -4,7 +4,7 @@ import { UserService } from "src/app/shared/services/user/user.service";
 @Component({
   selector: "app-sign-in",
   templateUrl: "./sign-in.component.html",
-  styleUrls: ["./sign-in.component.scss"]
+  styleUrls: ["./sign-in.component.scss", "./../shared-auth.scss"]
 })
 export class SignInComponent implements OnInit {
   emailAddress: string;

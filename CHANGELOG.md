@@ -1,12 +1,22 @@
 # Changelog
 
-## [0.11.2] - 2019-02-25
+## [0.11.3] - 2019-01-26
+
+Added
+
+- Started using the name `Colab Counters`
+
+Changed
+
+- Consolidated styles for auth pages
+
+## [0.11.2] - 2019-01-25
 
 Added
 
 - Bottom padding on counter dashboard to avoid cutting off content
 
-## [0.11.1] - 2019-02-25
+## [0.11.1] - 2019-01-25
 
 Added
 
