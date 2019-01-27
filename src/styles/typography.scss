@@ -3,4 +3,4 @@
 @import "~@angular/material/theming";
 
 $current-font-family: "Roboto";
-$typography: mat-typography-config($font-family: "Roboto, monospace");
+$typography: mat-typography-config($font-family: $current-font-family + ", monospace");

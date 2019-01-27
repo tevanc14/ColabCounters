@@ -33,7 +33,7 @@ export class CounterService {
     );
   }
 
-  checkCollaborators(collaborators: Array<Collaborator>): boolean {
+  checkCollaborators(collaborators: Collaborator[]): boolean {
     for (const collaborator of collaborators) {
       if (collaborator.userId === this.userService.user.userId) {
         return true;

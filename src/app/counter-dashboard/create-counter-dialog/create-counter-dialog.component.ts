@@ -10,9 +10,7 @@ import { FormControl, Validators } from "@angular/forms";
 export class CreateCounterDialogComponent implements OnInit {
   counterName = new FormControl("", [Validators.required]);
 
-  constructor(
-    public dialogRef: MatDialogRef<CreateCounterDialogComponent>
-  ) {}
+  constructor(public dialogRef: MatDialogRef<CreateCounterDialogComponent>) {}
 
   ngOnInit() {}
 

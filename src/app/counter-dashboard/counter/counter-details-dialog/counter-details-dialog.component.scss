@@ -4,7 +4,6 @@
 ::ng-deep .ngx-charts {
   text {
     fill: $theme-text !important;
-    font-family: "Roboto" !important;
   }
 }
 
@@ -13,7 +12,7 @@
 }
 
 .my-flex-mat-card {
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: visible !important;
-}  
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: visible !important;
+}

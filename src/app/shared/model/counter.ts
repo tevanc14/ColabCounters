@@ -31,9 +31,9 @@ export class Counter {
     public counterId: string,
     public name: string,
     public totalCount: number,
-    public counts: Array<Count>,
+    public counts: Count[],
     public lastModified: Date,
-    public collaborators: Array<Collaborator>,
+    public collaborators: Collaborator[],
     public status: CounterStatus,
     public createdBy: string,
     public dateCreated: Date

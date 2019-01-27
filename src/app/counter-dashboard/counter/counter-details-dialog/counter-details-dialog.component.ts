@@ -12,14 +12,13 @@ export interface DialogData {
   styleUrls: ["./counter-details-dialog.component.scss"]
 })
 export class CounterDetailsDialogComponent implements OnInit {
-  view: number[] = [700, 400];
-
+  counter: Counter;
   cumulativeCounts: any = [];
   dailyCounts: any = [];
 
+  view: number[] = [700, 400];
   showXAxis = true;
   showYAxis = true;
-
   colorScheme = {
     name: "cool",
     selectable: true,
@@ -42,6 +41,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<CounterDetailsDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
+    this.counter = data.counter;
     this.buildCumulativeCounts();
     this.buildDailyCounts();
   }
@@ -49,8 +49,8 @@ export class CounterDetailsDialogComponent implements OnInit {
   ngOnInit() {}
 
   buildCumulativeCounts() {
-    this.cumulativeCounts.push({ name: this.data.counter.name, series: [] });
-    this.data.counter.counts.forEach(count => {
+    this.cumulativeCounts.push({ name: this.counter.name, series: [] });
+    this.counter.counts.forEach(count => {
       this.cumulativeCounts[0].series.push({
         name: this.timestampToDateString(count.timestamp),
         value: count.currentCount
@@ -65,7 +65,7 @@ export class CounterDetailsDialogComponent implements OnInit {
 
   buildDateBuckets() {
     const dateBuckets: any = {};
-    this.data.counter.counts.forEach((count: Count) => {
+    this.counter.counts.forEach((count: Count) => {
       const dateString = this.timestampToDateString(count.timestamp);
 
       if (!dateBuckets[dateString]) {

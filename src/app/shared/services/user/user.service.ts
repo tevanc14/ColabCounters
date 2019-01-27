@@ -16,8 +16,8 @@ import { Observable, of } from "rxjs";
 export class UserService {
   user: User;
   user$: Observable<User>;
+  users$: Observable<User[]>;
   localStorageUserKey = "user";
-  users: Array<any> = [];
   userCollection: AngularFirestoreCollection<User>;
 
   constructor(
@@ -30,9 +30,9 @@ export class UserService {
     this.userCollection = db.collection<User>("users");
     this.angularFireAuth.authState.subscribe(userData => {
       if (userData) {
-        this.getUsers();
         this.user = new User(userData);
         this.user$ = of(this.user);
+        this.users$ = this.userCollection.valueChanges();
         this.setLocalStorageUser(this.user);
       } else {
         this.setLocalStorageUser(null);
@@ -137,15 +137,6 @@ export class UserService {
     this.setUserData(new User(result.user));
     this.ngZone.run(() => {
       this.router.navigate(["dashboard"]);
-    });
-  }
-
-  getUsers() {
-    const userRef: AngularFirestoreCollection<
-      any
-    > = this.angularFirestore.collection("users");
-    return userRef.valueChanges().forEach(user => {
-      this.users = this.users.concat(user);
     });
   }
 
