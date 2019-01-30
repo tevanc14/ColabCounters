@@ -10,7 +10,8 @@ import {
   MatDialogRef,
   MatAutocomplete,
   MatChipInputEvent,
-  MatAutocompleteSelectedEvent
+  MatAutocompleteSelectedEvent,
+  MatAutocompleteTrigger
 } from "@angular/material";
 import { Counter, Collaborator } from "src/app/shared/model/counter";
 import { UserService } from "src/app/shared/services/user/user.service";
@@ -34,6 +35,7 @@ export class CollaboratorDialogComponent implements OnInit {
   collaboratorUsers$: Observable<User[]>;
   collaboratorIds: string[];
   counter: Counter;
+  users$: Observable<User[]>;
 
   collaboratorConfiguration = {
     canRead: true,
@@ -45,13 +47,14 @@ export class CollaboratorDialogComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   emailControl = new FormControl();
   filteredEmails: Observable<string[]>;
-  emails: string[] = [];
+  emailsToBeAdded: string[] = [];
   allEmails: string[] = [];
 
   @ViewChild("collaboratorInput") collaboratorInput: ElementRef<
     HTMLInputElement
   >;
   @ViewChild("auto") matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
 
   constructor(
     public userService: UserService,
@@ -60,19 +63,29 @@ export class CollaboratorDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.counter = this.data.counter;
+    this.users$ = this.userService.subscribeToUserService();
     this.collaboratorIds = this.getCollaboratorIds();
     this.collaboratorUsers$ = this.getCollaborators();
-
     this.allEmails = this.getEmailsFromUsers();
-    this.filteredEmails = this.emailControl.valueChanges.pipe(
-      startWith(null),
-      map((email: string | null) =>
-        email ? this._filter(email) : this.allEmails.slice()
-      )
-    );
+    this.filteredEmails = this.initializeFilteredEmails();
   }
 
   ngOnInit() {}
+
+  initializeFilteredEmails() {
+    return this.emailControl.valueChanges.pipe(
+      startWith(null),
+      map((email: string | null) => {
+        return email ? this.filterEmails(email) : this.allEmails.slice();
+      }),
+      // TODO: See if can combine with other map
+      map(emails => {
+        return emails.filter(email => {
+          return !this.emailsToBeAdded.includes(email);
+        });
+      })
+    );
+  }
 
   getCollaboratorIds() {
     const collaboratorIds = [];
@@ -85,7 +98,7 @@ export class CollaboratorDialogComponent implements OnInit {
   }
 
   getCollaborators() {
-    return this.userService.users$.pipe(
+    return this.users$.pipe(
       map(users => {
         return users.filter(user => {
           return this.collaboratorIds.includes(user.userId);
@@ -94,9 +107,10 @@ export class CollaboratorDialogComponent implements OnInit {
     );
   }
 
-  addCollaborator() {
-    this.emails.forEach(email => {
-      this.getUserFromEmail(email).subscribe((user: User) => {
+  addCollaborators() {
+    this.users$.subscribe((users: User[]) => {
+      this.emailsToBeAdded.forEach(email => {
+        const user = this.getUserFromEmail(email, users);
         this.counterService.addCollaborator(
           this.counter.counterId,
           new Collaborator(
@@ -112,41 +126,45 @@ export class CollaboratorDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  getUserFromEmail(emailAddress: string): Observable<User> {
-    return this.userService.users$.pipe(
-      map(users => {
-        return users.filter(user => {
-          return (
-            !this.collaboratorIds.includes(user.emailAddress) &&
-            user.emailAddress === emailAddress &&
-            user.userId !== this.userService.user.userId
-          );
-        });
-      })
-    )[0];
+  getUserFromEmail(emailAddress: string, users: User[]): any {
+    for (const user of users) {
+      if (
+        !this.isExistingCollaborator(user) &&
+        user.emailAddress === emailAddress &&
+        user.userId !== this.userService.user.userId
+      ) {
+        return user;
+      }
+    }
   }
 
   isCreator(user: User) {
     return user.userId === this.counter.createdBy;
   }
 
+  isExistingCollaborator(user: User) {
+    return this.collaboratorIds.includes(user.userId);
+  }
+
   getEmailsFromUsers() {
     const emails: string[] = [];
     this.userService.users$.subscribe(users => {
       for (const user of users) {
-        emails.push(user.emailAddress);
+        if (!this.isExistingCollaborator(user)) {
+          emails.push(user.emailAddress);
+        }
       }
     });
     return emails;
   }
 
-  add(event: MatChipInputEvent): void {
+  addCollaboratorEmail(event: MatChipInputEvent): void {
     if (!this.matAutocomplete.isOpen) {
       const input = event.input;
       const value = event.value;
 
       if ((value || "").trim()) {
-        this.emails.push(value.trim());
+        this.emailsToBeAdded.push(value.trim());
       }
 
       if (input) {
@@ -157,25 +175,25 @@ export class CollaboratorDialogComponent implements OnInit {
     }
   }
 
-  remove(email: string): void {
-    const index = this.emails.indexOf(email);
+  removeCollaboratorEmail(email: string): void {
+    this.autocomplete.closePanel();
 
+    const index = this.emailsToBeAdded.indexOf(email);
     if (index >= 0) {
-      this.emails.splice(index, 1);
+      this.emailsToBeAdded.splice(index, 1);
+      this.emailControl.setValue(null);
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.emails.push(event.option.viewValue);
+  selectCollaboratorEmail(event: MatAutocompleteSelectedEvent): void {
+    this.emailsToBeAdded.push(event.option.viewValue);
     this.collaboratorInput.nativeElement.value = "";
     this.emailControl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.allEmails.filter(
-      email => email.toLowerCase().indexOf(filterValue) === 0
-    );
+  filterEmails(value: string): string[] {
+    return this.allEmails.filter(email => {
+      return email.indexOf(value) === 0;
+    });
   }
 }

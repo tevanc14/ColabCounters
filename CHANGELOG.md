@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.0] - 2019-01-29
+
+Added
+
+- Autocomplete chip list for available users to add as collaborators
+- Alternate stats page when no interactions are present on a counter
+- Google user photo as icon for user menu
+
+Changed
+
+- Redirects to dashboard to avoid forcing users to sign in when navigating to the site
+
+Removed
+
+- Alert when closing Google auth popup
+
 ## [0.15.0] - 2019-01-26
 
 Added

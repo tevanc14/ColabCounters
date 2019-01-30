@@ -3,7 +3,7 @@
   <mat-list class="left-panel"
             fxLayout="column">
     <div mat-subheader>Collaborators (*Creator)</div>
-    <ng-container *ngIf="collaboratorUsers$ | async as collaboratorUsers">
+    <ng-container *ngIf="(collaboratorUsers$ | async) as collaboratorUsers">
       <mat-list-item *ngFor="let collaboratorUser of collaboratorUsers">
         {{ collaboratorUser.emailAddress }}
         <sup *ngIf="isCreator(collaboratorUser)">*</sup>
@@ -13,35 +13,34 @@
   <mat-divider [vertical]="true"></mat-divider>
   <div class="right-panel"
        fxLayout="column">
-    <mat-list>
-      <mat-list-item>
-        <mat-form-field class="email-input"
-                        *ngIf="allEmails.length > 0">
-          <mat-chip-list #chipList>
-            <mat-chip *ngFor="let email of emails"
-                      (removed)="remove(email)">
-              {{email}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input placeholder="Email address"
-                   #collaboratorInput
-                   [formControl]="emailControl"
-                   [matAutocomplete]="auto"
-                   [matChipInputFor]="chipList"
-                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                   [matChipInputAddOnBlur]="addOnBlur"
-                   (matChipInputTokenEnd)="add($event)">
-          </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete"
-                            (optionSelected)="selected($event)">
-            <mat-option *ngFor="let email of filteredEmails | async"
-                        [value]="email">
-              {{email}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </mat-list-item>
 
+    <mat-form-field class="email-input"
+                    *ngIf="allEmails.length > 0">
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let email of emailsToBeAdded"
+                  (removed)="removeCollaboratorEmail(email)">
+          {{email}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input placeholder="Email addresses"
+               [formControl]="emailControl"
+               [matAutocomplete]="auto"
+               [matChipInputFor]="chipList"
+               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+               [matChipInputAddOnBlur]="addOnBlur"
+               (matChipInputTokenEnd)="addCollaboratorEmail($event)"
+               #collaboratorInput>
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete"
+                        (optionSelected)="selectCollaboratorEmail($event)">
+        <mat-option *ngFor="let email of (filteredEmails | async)"
+                    [value]="email">
+          {{email}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-list>
       <div mat-subheader>Permissions</div>
       <mat-list-item>
         <mat-slide-toggle [(ngModel)]="collaboratorConfiguration.canRead"
@@ -61,8 +60,8 @@
     </mat-list>
 
     <button mat-fab
-            (click)="addCollaborator()"
-            class="add-collaborator">
+            (click)="addCollaborators()"
+            class="add-collaborators">
       <mat-icon>group_add</mat-icon>
     </button>
   </div>

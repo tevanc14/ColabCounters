@@ -13,8 +13,14 @@
   width: 300px;
 }
 
-.add-collaborator {
+.add-collaborators {
   position: absolute;
   right: 0;
   bottom: 0;
+}
+
+.email-input {
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
 }

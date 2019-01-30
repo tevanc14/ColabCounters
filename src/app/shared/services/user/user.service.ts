@@ -8,16 +8,18 @@ import {
   AngularFirestoreCollection
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { Observable, of } from "rxjs";
+import { Observable, of, BehaviorSubject } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
+  // TODO: Are both of these needed? If so rename to currentUser
   user: User;
   user$: Observable<User>;
-  users$: Observable<User[]>;
-  localStorageUserKey = "user";
+  users$: BehaviorSubject<User[]>;
+  users: User[] = [];
+  localStorageUserKey = "colabCountersUser";
   userCollection: AngularFirestoreCollection<User>;
 
   constructor(
@@ -32,12 +34,29 @@ export class UserService {
       if (userData) {
         this.user = new User(userData);
         this.user$ = of(this.user);
-        this.users$ = this.userCollection.valueChanges();
+        this.initializeUserService();
         this.setLocalStorageUser(this.user);
       } else {
         this.setLocalStorageUser(null);
       }
     });
+  }
+
+  initializeUserService() {
+    if (!this.users$) {
+      this.users$ = <BehaviorSubject<User[]>>(
+        new BehaviorSubject(new Array<User>())
+      );
+
+      this.userCollection.valueChanges().subscribe(userValueChanges => {
+        this.users = userValueChanges;
+        this.users$.next(userValueChanges);
+      });
+    }
+  }
+
+  subscribeToUserService(): Observable<User[]> {
+    return this.users$.asObservable();
   }
 
   getLocalStorageUser(): User {
@@ -106,7 +125,9 @@ export class UserService {
       const result = await this.angularFireAuth.auth.signInWithPopup(provider);
       this.finishLogin(result);
     } catch (error) {
-      window.alert(error);
+      if (error.code !== "auth/popup-closed-by-user") {
+        console.log(error);
+      }
     }
   }
 

@@ -1,23 +1,21 @@
-<mat-toolbar class="toolbar"
-             color="primary">
+<mat-toolbar class="toolbar" color="primary">
   <span>{{ title }}</span>
-  <button class="icon"
-          [matMenuTriggerFor]="menu"
-          mat-icon-button>
-    <ng-container *ngIf="userService.user$ | async as user">
-      <ng-container *ngIf="hasUserPhoto(user)">
+  <button class="icon" [matMenuTriggerFor]="menu" mat-icon-button>
+    <div *ngIf="(userService.user$ | async) as user">
+      <div *ngIf="hasUserPhoto(user)">
         <mat-icon [inline]="true">account_circle</mat-icon>
-      </ng-container>
-      <ng-container *ngIf="!hasUserPhoto(user)">
-        <img class="google-photo"
-             alt="user.displayName"
-             [src]="user.photoURL">
-      </ng-container>
-    </ng-container>
+      </div>
+      <div *ngIf="!hasUserPhoto(user)">
+        <img
+          class="google-photo"
+          alt="user.displayName"
+          [src]="user.photoURL"
+        />
+      </div>
+    </div>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item
-            (click)="userService.signOut()">
+    <button mat-menu-item (click)="userService.signOut()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Log out</span>
     </button>

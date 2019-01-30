@@ -4,7 +4,6 @@
      fxLayoutAlign="center space-evenly">
 
   <ng-container *ngIf="(counterService.counters$ | async) as counters; else loading">
-    <!-- <ng-container *ngIf="false; else loading"> -->
     <ng-container *ngFor="let counter of counters">
       <app-counter [counter]="counter"></app-counter>
     </ng-container>

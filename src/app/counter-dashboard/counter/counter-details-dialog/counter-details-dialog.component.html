@@ -1,23 +1,33 @@
 <div mat-dialog-title>{{ counter.name }}</div>
-<mat-tab-group class="my-flex-mat-card">
-  <mat-tab label="Cumulative">
-    <div>
-      <ngx-charts-line-chart class="line-chart"
-                             [view]="view"
-                             [scheme]="colorScheme"
-                             [results]="cumulativeCounts"
-                             [xAxis]="showXAxis"
-                             [yAxis]="showYAxis">
-      </ngx-charts-line-chart>
-    </div>
-  </mat-tab>
-  <mat-tab label="Daily">
-    <ngx-charts-bar-vertical class="bar-chart"
-                             [view]="view"
-                             [scheme]="colorScheme"
-                             [results]="dailyCounts"
-                             [xAxis]="showXAxis"
-                             [yAxis]="showYAxis">
-    </ngx-charts-bar-vertical>
-  </mat-tab>
-</mat-tab-group>
+<div *ngIf="hasCounts(); else noStats">
+  <mat-tab-group class="my-flex-mat-card">
+    <mat-tab label="Cumulative">
+      <div>
+        <ngx-charts-line-chart
+          class="line-chart"
+          [view]="view"
+          [scheme]="colorScheme"
+          [results]="cumulativeCounts"
+          [xAxis]="showXAxis"
+          [yAxis]="showYAxis"
+        >
+        </ngx-charts-line-chart>
+      </div>
+    </mat-tab>
+    <mat-tab label="Daily">
+      <ngx-charts-bar-vertical
+        class="bar-chart"
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="dailyCounts"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+      >
+      </ngx-charts-bar-vertical>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+
+<ng-template #noStats>
+  <div class="mat-h4">No counter operations have been performed as of yet</div>
+</ng-template>

@@ -48,6 +48,10 @@ export class CounterDetailsDialogComponent implements OnInit {
 
   ngOnInit() {}
 
+  hasCounts(): boolean {
+    return this.counter.counts.length > 0;
+  }
+
   buildCumulativeCounts() {
     this.cumulativeCounts.push({ name: this.counter.name, series: [] });
     this.counter.counts.forEach(count => {
@@ -99,7 +103,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     }
   }
 
-  timestampToDateString(timestamp: any) {
+  timestampToDateString(timestamp: any): string {
     return new Date(timestamp.seconds * 1000).toLocaleDateString();
   }
 }
