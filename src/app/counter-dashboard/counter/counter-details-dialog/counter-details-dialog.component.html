@@ -1,30 +1,38 @@
 <div mat-dialog-title>{{ counter.name }}</div>
+
 <div *ngIf="hasCounts(); else noStats">
-  <mat-tab-group class="my-flex-mat-card">
+  <mat-tab-group>
+
     <mat-tab label="Cumulative">
-      <div>
-        <ngx-charts-line-chart
-          class="line-chart"
-          [view]="view"
-          [scheme]="colorScheme"
-          [results]="cumulativeCounts"
-          [xAxis]="showXAxis"
-          [yAxis]="showYAxis"
-        >
-        </ngx-charts-line-chart>
-      </div>
+      <ngx-charts-line-chart class="line-chart"
+                             [view]="view"
+                             [scheme]="colorScheme"
+                             [results]="cumulativeCounts"
+                             [xAxis]="showXAxis"
+                             [yAxis]="showYAxis">
+      </ngx-charts-line-chart>
     </mat-tab>
+
     <mat-tab label="Daily">
-      <ngx-charts-bar-vertical
-        class="bar-chart"
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="dailyCounts"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-      >
+      <ngx-charts-bar-vertical class="bar-chart"
+                               [view]="view"
+                               [scheme]="colorScheme"
+                               [results]="dailyCounts"
+                               [xAxis]="showXAxis"
+                               [yAxis]="showYAxis">
       </ngx-charts-bar-vertical>
     </mat-tab>
+
+    <mat-tab label="User">
+      <ngx-charts-bar-vertical class="bar-chart"
+                               [view]="view"
+                               [scheme]="colorScheme"
+                               [results]="userCounts"
+                               [xAxis]="showXAxis"
+                               [yAxis]="showYAxis">
+      </ngx-charts-bar-vertical>
+    </mat-tab>
+
   </mat-tab-group>
 </div>
 

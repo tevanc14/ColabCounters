@@ -183,4 +183,15 @@ export class UserService {
         });
     });
   }
+
+  getUserFromId(userId: string) {
+    this.users$.subscribe((users: User[]) => {
+      for (const user of users) {
+        if (user.userId === userId) {
+          console.log("returning", user);
+          return user;
+        }
+      }
+    });
+  }
 }

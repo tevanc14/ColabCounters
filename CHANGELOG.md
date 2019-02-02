@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.21.0] - 2019-02-02
+
+Added
+
+- Graph of counts per user
+
 ## [0.20.0] - 2019-02-02
 
 Added

@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
 import { Counter, Count, CountType } from "src/app/shared/model/counter";
+import { UserService } from "src/app/shared/services/user/user.service";
+import { User } from "src/app/shared/model/user";
 
 export interface DialogData {
   counter: Counter;
@@ -12,14 +14,15 @@ export interface DialogData {
   styleUrls: ["./counter-details-dialog.component.scss"]
 })
 export class CounterDetailsDialogComponent implements OnInit {
-  counter: Counter;
-  cumulativeCounts: any = [];
-  dailyCounts: any = [];
+  public counter: Counter;
+  public cumulativeCounts: any = [];
+  public dailyCounts: any = [];
+  public userCounts: any = [];
 
-  view: number[] = [700, 400];
-  showXAxis = true;
-  showYAxis = true;
-  colorScheme = {
+  public view: number[] = [700, 400];
+  public showXAxis = true;
+  public showYAxis = true;
+  public colorScheme = {
     name: "cool",
     selectable: true,
     group: "Ordinal",
@@ -37,13 +40,17 @@ export class CounterDetailsDialogComponent implements OnInit {
     ]
   };
 
+  private userMap = {};
+
   constructor(
     public dialogRef: MatDialogRef<CounterDetailsDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private userService: UserService
   ) {
     this.counter = data.counter;
     this.buildCumulativeCounts();
     this.buildDailyCounts();
+    this.buildCountsPerUser();
   }
 
   ngOnInit() {}
@@ -92,7 +99,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     }
   }
 
-  extractDailyCountsFromObject(dateBuckets: []) {
+  extractDailyCountsFromObject(dateBuckets) {
     for (const key in dateBuckets) {
       if (dateBuckets.hasOwnProperty(key)) {
         this.dailyCounts.push({
@@ -101,6 +108,45 @@ export class CounterDetailsDialogComponent implements OnInit {
         });
       }
     }
+  }
+
+  buildCountsPerUser() {
+    this.getUserIdMap();
+    const userCountBuckets: any = this.buildUserCountBuckets();
+    this.extractUserCountsFromObject(userCountBuckets);
+  }
+
+  buildUserCountBuckets() {
+    const userCountBuckets: any = {};
+    this.counter.counts.forEach((count: Count) => {
+      const emailAddress = this.userMap[count.userId];
+
+      if (!userCountBuckets[emailAddress]) {
+        userCountBuckets[emailAddress] = 0;
+      }
+
+      userCountBuckets[emailAddress] += this.discernCountOperation(count);
+    });
+    return userCountBuckets;
+  }
+
+  extractUserCountsFromObject(userCountBuckets) {
+    for (const key in userCountBuckets) {
+      if (userCountBuckets.hasOwnProperty(key)) {
+        this.userCounts.push({
+          name: key,
+          value: userCountBuckets[key]
+        });
+      }
+    }
+  }
+
+  getUserIdMap() {
+    this.userService.users$.subscribe((users: User[]) => {
+      for (const user of users) {
+        this.userMap[user.userId] = user.emailAddress;
+      }
+    });
   }
 
   timestampToDateString(timestamp: any): string {
