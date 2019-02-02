@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.21.1] - 2019-02-02
+
+Changed
+
+- Layout of the counters in the dashboard
+
 ## [0.21.0] - 2019-02-02
 
 Added

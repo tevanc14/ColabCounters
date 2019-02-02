@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 <div class="dashboard-page"
      fxLayout="row wrap"
-     fxLayoutAlign="center space-evenly">
+     fxLayoutAlign="space-evenly center">
 
   <ng-container *ngIf="(counterService.counters$ | async) as counters; else loading">
     <ng-container *ngFor="let counter of counters">
