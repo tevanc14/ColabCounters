@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.18.0] - 2019-02-02
+
+Added
+
+- Confirm dialog when deleting a counter
+
 ## [0.17.0] - 2019-02-01
 
 Added

@@ -1,0 +1,15 @@
+<div class="confirm-delete-dialog">
+  <div mat-dialog-title>Are you sure you want to delete:</div>
+  <div class="mat-h1">
+    {{counter.name}}
+  </div>
+  <div mat-dialog-actions
+       fxLayout="row"
+       fxLayoutAlign="space-between">
+    <button mat-raised-button
+            [mat-dialog-close]="false">Cancel</button>
+    <button mat-button
+            color="warn"
+            [mat-dialog-close]="true">Delete</button>
+  </div>
+</div>

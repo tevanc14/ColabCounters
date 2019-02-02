@@ -13,6 +13,7 @@ import { CounterDetailsDialogComponent } from "./counter/counter-details-dialog/
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { CollaboratorDialogComponent } from "./counter/collaborator-dialog/collaborator-dialog.component";
 import { TitleVisibilityService } from "../shared/services/title-visibility/title-visibility.service";
+import { ConfirmDeleteDialogComponent } from "./counter/confirm-delete-dialog/confirm-delete-dialog.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TitleVisibilityService } from "../shared/services/title-visibility/titl
     CreateCounterDialogComponent,
     ToolbarComponent,
     CounterDetailsDialogComponent,
-    CollaboratorDialogComponent
+    CollaboratorDialogComponent,
+    ConfirmDeleteDialogComponent
   ],
   imports: [
     AppRoutingModule,
@@ -43,7 +45,8 @@ import { TitleVisibilityService } from "../shared/services/title-visibility/titl
   entryComponents: [
     CreateCounterDialogComponent,
     CounterDetailsDialogComponent,
-    CollaboratorDialogComponent
+    CollaboratorDialogComponent,
+    ConfirmDeleteDialogComponent
   ]
 })
 export class CounterDashboardModule {}

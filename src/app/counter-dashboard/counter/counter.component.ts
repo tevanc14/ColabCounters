@@ -6,6 +6,7 @@ import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-
 import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
 import { UserService } from "src/app/shared/services/user/user.service";
 import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
+import { ConfirmDeleteDialogComponent } from "./confirm-delete-dialog/confirm-delete-dialog.component";
 
 @Component({
   selector: "app-counter",
@@ -59,8 +60,20 @@ export class CounterComponent implements OnInit {
     this.counterService.updateCounter(counter.counterId, update);
   }
 
-  delete(counter: Counter) {
-    this.counterService.deleteCounter(counter);
+  delete() {
+    this.counterService.deleteCounter(this.counter);
+  }
+
+  openConfirmDeleteDialog() {
+    const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
+      data: { counter: this.counter }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.delete();
+      }
+    });
   }
 
   openDetailsDialog() {
