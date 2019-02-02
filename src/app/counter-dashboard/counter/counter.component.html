@@ -20,7 +20,13 @@
     </button>
     <button mat-menu-item
             *ngIf=createdByCurrentUser()
-            (click)="openConfirmDeleteDialog(counter)">
+            (click)="openEditNameDialog()">
+      <mat-icon>edit</mat-icon>
+      <span>Edit name</span>
+    </button>
+    <button mat-menu-item
+            *ngIf=createdByCurrentUser()
+            (click)="openConfirmDeleteDialog()">
       <mat-icon>delete</mat-icon>
       <span>Delete</span>
     </button>

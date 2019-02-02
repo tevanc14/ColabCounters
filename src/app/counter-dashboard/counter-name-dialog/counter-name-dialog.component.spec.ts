@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { CreateCounterDialogComponent } from "./create-counter-dialog.component";
+import { CounterNameDialogComponent } from "./counter-name-dialog.component";
 
 describe("CreateCounterDialogComponent", () => {
-  let component: CreateCounterDialogComponent;
-  let fixture: ComponentFixture<CreateCounterDialogComponent>;
+  let component: CounterNameDialogComponent;
+  let fixture: ComponentFixture<CounterNameDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateCounterDialogComponent]
+      declarations: [CounterNameDialogComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateCounterDialogComponent);
+    fixture = TestBed.createComponent(CounterNameDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,7 +6,7 @@ import { CounterService } from "./../shared/services/counter-service/counter.ser
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { MaterialModule } from "../material.module";
-import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
+import { CounterNameDialogComponent } from "./counter-name-dialog/counter-name-dialog.component";
 import { ToolbarComponent } from "./toolbar/toolbar.component";
 import { AppRoutingModule } from "../app-routing.module";
 import { CounterDetailsDialogComponent } from "./counter/counter-details-dialog/counter-details-dialog.component";
@@ -19,7 +19,7 @@ import { ConfirmDeleteDialogComponent } from "./counter/confirm-delete-dialog/co
   declarations: [
     CounterComponent,
     CounterDashboardComponent,
-    CreateCounterDialogComponent,
+    CounterNameDialogComponent,
     ToolbarComponent,
     CounterDetailsDialogComponent,
     CollaboratorDialogComponent,
@@ -38,12 +38,12 @@ import { ConfirmDeleteDialogComponent } from "./counter/confirm-delete-dialog/co
   exports: [
     CounterComponent,
     CounterDashboardComponent,
-    CreateCounterDialogComponent,
+    CounterNameDialogComponent,
     ToolbarComponent
   ],
   providers: [CounterService, TitleVisibilityService],
   entryComponents: [
-    CreateCounterDialogComponent,
+    CounterNameDialogComponent,
     CounterDetailsDialogComponent,
     CollaboratorDialogComponent,
     ConfirmDeleteDialogComponent

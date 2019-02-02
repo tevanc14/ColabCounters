@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CounterService } from "./../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
-import { CreateCounterDialogComponent } from "./create-counter-dialog/create-counter-dialog.component";
+import { CounterNameDialogComponent } from "./counter-name-dialog/counter-name-dialog.component";
 
 @Component({
   selector: "app-counter-dashboard",
@@ -18,8 +18,10 @@ export class CounterDashboardComponent implements OnInit {
 
   ngOnInit() {}
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(CreateCounterDialogComponent);
+  openCreateCounterDialog(): void {
+    const dialogRef = this.dialog.open(CounterNameDialogComponent, {
+      data: { title: "New counter name" }
+    });
 
     dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {

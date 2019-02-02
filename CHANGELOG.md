@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.19.0] - 2019-02-02
+
+Added
+
+- Able to edit the name of a counter
+
 ## [0.18.0] - 2019-02-02
 
 Added

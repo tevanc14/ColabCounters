@@ -1,6 +1,6 @@
 <div fxLayout="column"
      fxLayoutAlign="space-evenly">
-  <h1 mat-dialog-title>New Counter</h1>
+  <h1 mat-dialog-title>{{title}}</h1>
   <div mat-dialog-content>
     <mat-form-field hintLabel="Max 50 characters">
       <mat-label>Name</mat-label>
@@ -12,7 +12,7 @@
                 [formControl]="counterName"
                 required>
     </textarea>
-    <mat-error *ngIf="counterName.invalid">{{ getErrorMessage() }}</mat-error>
+      <mat-error *ngIf="counterName.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
   </div>
   <div mat-dialog-actions

@@ -7,6 +7,7 @@ import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-
 import { UserService } from "src/app/shared/services/user/user.service";
 import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
 import { ConfirmDeleteDialogComponent } from "./confirm-delete-dialog/confirm-delete-dialog.component";
+import { CounterNameDialogComponent } from "../counter-name-dialog/counter-name-dialog.component";
 
 @Component({
   selector: "app-counter",
@@ -85,6 +86,20 @@ export class CounterComponent implements OnInit {
   openCollaboratorDialog() {
     this.dialog.open(CollaboratorDialogComponent, {
       data: { counter: this.counter }
+    });
+  }
+
+  openEditNameDialog() {
+    const dialogRef = this.dialog.open(CounterNameDialogComponent, {
+      data: { title: "Edit counter name" }
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
+        this.counterService.updateCounter(this.counter.counterId, {
+          name: result
+        });
+      }
     });
   }
 
