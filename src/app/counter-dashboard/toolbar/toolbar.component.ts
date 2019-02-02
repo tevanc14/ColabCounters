@@ -2,6 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "src/app/shared/services/user/user.service";
 import { User } from "src/app/shared/model/user";
 import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
+import {
+  CounterService,
+  SortType
+} from "src/app/shared/services/counter-service/counter.service";
 
 @Component({
   selector: "app-toolbar",
@@ -9,11 +13,13 @@ import { TitleVisibilityService } from "src/app/shared/services/title-visibility
   styleUrls: ["./toolbar.component.scss"]
 })
 export class ToolbarComponent implements OnInit {
-  title = "Colab Counters";
-  titleVisibility: boolean;
+  public sortTypeEnum = SortType;
+  public title = "Colab Counters";
+  public titleVisibility: boolean;
 
   constructor(
     public userService: UserService,
+    private counterService: CounterService,
     private titleVisibilityService: TitleVisibilityService
   ) {}
 
@@ -31,5 +37,9 @@ export class ToolbarComponent implements OnInit {
 
   setTitleVisibility(visibility: boolean) {
     this.titleVisibilityService.changeVisibility(visibility);
+  }
+
+  changeCounterSortType(sortType: SortType) {
+    this.counterService.changeSortType(sortType);
   }
 }

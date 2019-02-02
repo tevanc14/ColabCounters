@@ -6,29 +6,46 @@ import {
 } from "@angular/fire/firestore";
 
 import { Counter, Collaborator, CounterStatus } from "./../../model/counter";
-import { Observable } from "rxjs";
+import { Observable, BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { firestore } from "firebase/app";
 import { UserService } from "../user/user.service";
 
 @Injectable()
 export class CounterService {
+  private sortType = new BehaviorSubject("name");
+  sortType$ = this.sortType.asObservable();
+
   counterCollection: AngularFirestoreCollection<Counter>;
-  counters$: Observable<any>;
+  counters$: Observable<Counter[]>;
 
   constructor(private db: AngularFirestore, public userService: UserService) {
-    this.counterCollection = db.collection<Counter>("counters", ref =>
-      ref.orderBy("name")
-    );
-    this.counters$ = this.getCounters();
+    this.counterCollection = db.collection<Counter>("counters");
+    this.sortType$.subscribe((sortType: SortType) => {
+      this.counters$ = this.getCounters(sortType);
+    });
   }
 
-  getCounters() {
+  changeSortType(sortType: SortType) {
+    this.sortType.next(sortType);
+  }
+
+  getCounters(sortType: SortType): Observable<Counter[]> {
     return this.counterCollection.valueChanges().pipe(
       map(counters => {
-        return counters.filter(counter => {
-          return this.checkCollaborators(counter.collaborators);
-        });
+        return counters
+          .filter((counter: Counter) => {
+            return this.checkCollaborators(counter.collaborators);
+          })
+          .sort((a: Counter, b: Counter) => {
+            if (a[sortType] < b[sortType]) {
+              return -1;
+            } else if (a[sortType] > b[sortType]) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
       })
     );
   }
@@ -60,7 +77,7 @@ export class CounterService {
       [],
       now,
       [new Collaborator(this.userService.user.userId, true, true, true)],
-      CounterStatus.ACTIVE,
+      CounterStatus.Active,
       this.userService.user.userId,
       now
     );
@@ -88,9 +105,15 @@ export class CounterService {
   }
 
   updateCountersCreated(userId: string, activeCreatedCounters: number) {
-    console.log(userId, activeCreatedCounters);
     this.userService.updateCountersCreated(userId, {
       activeCreatedCounters: activeCreatedCounters
     });
   }
+}
+
+export enum SortType {
+  Name = "name",
+  DateCreated = "dateCreated",
+  LastModified = "lastModified",
+  TotalCount = "totalCount"
 }

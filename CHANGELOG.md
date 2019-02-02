@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.20.0] - 2019-02-02
+
+Added
+
+- Different sort types for counters
+  - Did not include totalCount or lastModified as it caused existing counters
+    to switch spots when editing
+
 ## [0.19.0] - 2019-02-02
 
 Added

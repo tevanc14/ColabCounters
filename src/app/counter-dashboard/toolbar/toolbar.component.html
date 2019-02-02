@@ -1,8 +1,10 @@
 <mat-toolbar class="toolbar"
              color="primary">
+
   <span>{{ title }}</span>
+
   <button class="icon"
-          [matMenuTriggerFor]="menu"
+          [matMenuTriggerFor]="options"
           mat-icon-button>
     <div *ngIf="(userService.user$ | async) as user">
       <div *ngIf="hasUserPhoto(user); else noUserPhoto">
@@ -15,11 +17,12 @@
       </ng-template>
     </div>
   </button>
-  <mat-menu #menu="matMenu">
+
+  <mat-menu #options="matMenu">
     <button mat-menu-item
-            (click)="userService.signOut()">
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Log out</span>
+            [matMenuTriggerFor]="sortTypes">
+      <mat-icon>sort</mat-icon>
+      <span>Sort type</span>
     </button>
     <button mat-menu-item
             *ngIf="titleVisibility"
@@ -33,5 +36,22 @@
       <mat-icon>visibility</mat-icon>
       <span>Show titles</span>
     </button>
+    <button mat-menu-item
+            (click)="userService.signOut()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Log out</span>
+    </button>
   </mat-menu>
+
+  <mat-menu #sortTypes="matMenu">
+    <button mat-menu-item
+            (click)="changeCounterSortType(sortTypeEnum.Name)">
+      Name
+    </button>
+    <button mat-menu-item
+            (click)="changeCounterSortType(sortTypeEnum.DateCreated)">
+      Date created
+    </button>
+  </mat-menu>
+
 </mat-toolbar>

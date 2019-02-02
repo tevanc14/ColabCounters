@@ -83,9 +83,9 @@ export class CounterDetailsDialogComponent implements OnInit {
   }
 
   discernCountOperation(count: Count): number {
-    if (count.type === CountType.INCREMENT) {
+    if (count.type === CountType.Increment) {
       return 1;
-    } else if (count.type === CountType.DECREMENT) {
+    } else if (count.type === CountType.Decrement) {
       return -1;
     } else {
       return 0;

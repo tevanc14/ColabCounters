@@ -1,11 +1,11 @@
 export enum CountType {
-  INCREMENT = "increment",
-  DECREMENT = "decrement"
+  Increment = "increment",
+  Decrement = "decrement"
 }
 
 export enum CounterStatus {
-  ACTIVE = "active",
-  INACTIVE = "inactive"
+  Active = "active",
+  Inactive = "inactive"
 }
 
 export class Collaborator {

@@ -35,13 +35,13 @@ export class CounterComponent implements OnInit {
 
   increment(counter: Counter) {
     const incrementedCount = counter.totalCount + 1;
-    this.updateTotalCount(incrementedCount, counter, CountType.INCREMENT);
+    this.updateTotalCount(incrementedCount, counter, CountType.Increment);
   }
 
   decrement(counter: Counter) {
     if (counter.totalCount > 0) {
       const decrementedCount = counter.totalCount - 1;
-      this.updateTotalCount(decrementedCount, counter, CountType.DECREMENT);
+      this.updateTotalCount(decrementedCount, counter, CountType.Decrement);
     }
   }
 
