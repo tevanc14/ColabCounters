@@ -12,6 +12,7 @@ import { AppRoutingModule } from "../app-routing.module";
 import { CounterDetailsDialogComponent } from "./counter/counter-details-dialog/counter-details-dialog.component";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { CollaboratorDialogComponent } from "./counter/collaborator-dialog/collaborator-dialog.component";
+import { TitleVisibilityService } from "../shared/services/title-visibility/title-visibility.service";
 
 @NgModule({
   declarations: [
@@ -38,7 +39,7 @@ import { CollaboratorDialogComponent } from "./counter/collaborator-dialog/colla
     CreateCounterDialogComponent,
     ToolbarComponent
   ],
-  providers: [CounterService],
+  providers: [CounterService, TitleVisibilityService],
   entryComponents: [
     CreateCounterDialogComponent,
     CounterDetailsDialogComponent,

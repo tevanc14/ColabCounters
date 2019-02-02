@@ -26,7 +26,8 @@
     </button>
   </mat-menu>
 
-  <h2 class="mat-h2">{{ counter.name }}</h2>
+  <h2 class="mat-h2"
+      *ngIf="titleVisibility">{{ counter.name }}</h2>
   <h1 class="mat-h1">{{ counter.totalCount }}</h1>
   <div fxLayout="row"
        fxLayoutAlign="space-between">

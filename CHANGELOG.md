@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.17.0] - 2019-02-01
+
+Added
+
+- Ability to hide titles
+
 ## [0.16.0] - 2019-01-29
 
 Added

@@ -1,23 +1,37 @@
-<mat-toolbar class="toolbar" color="primary">
+<mat-toolbar class="toolbar"
+             color="primary">
   <span>{{ title }}</span>
-  <button class="icon" [matMenuTriggerFor]="menu" mat-icon-button>
+  <button class="icon"
+          [matMenuTriggerFor]="menu"
+          mat-icon-button>
     <div *ngIf="(userService.user$ | async) as user">
-      <div *ngIf="hasUserPhoto(user)">
+      <div *ngIf="hasUserPhoto(user); else noUserPhoto">
+        <img class="google-photo"
+             alt="user.displayName"
+             [src]="user.photoURL" />
+      </div>
+      <ng-template #noUserPhoto>
         <mat-icon [inline]="true">account_circle</mat-icon>
-      </div>
-      <div *ngIf="!hasUserPhoto(user)">
-        <img
-          class="google-photo"
-          alt="user.displayName"
-          [src]="user.photoURL"
-        />
-      </div>
+      </ng-template>
     </div>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="userService.signOut()">
+    <button mat-menu-item
+            (click)="userService.signOut()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Log out</span>
+    </button>
+    <button mat-menu-item
+            *ngIf="titleVisibility"
+            (click)="setTitleVisibility(false)">
+      <mat-icon>visibility_off</mat-icon>
+      <span>Hide titles</span>
+    </button>
+    <button mat-menu-item
+            *ngIf="!titleVisibility"
+            (click)="setTitleVisibility(true)">
+      <mat-icon>visibility</mat-icon>
+      <span>Show titles</span>
     </button>
   </mat-menu>
 </mat-toolbar>

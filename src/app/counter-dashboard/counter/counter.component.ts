@@ -5,6 +5,7 @@ import { MatDialog } from "@angular/material";
 import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
 import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
 import { UserService } from "src/app/shared/services/user/user.service";
+import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
 
 @Component({
   selector: "app-counter",
@@ -13,14 +14,22 @@ import { UserService } from "src/app/shared/services/user/user.service";
 })
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
+  titleVisibility: boolean;
 
   constructor(
     private counterService: CounterService,
     private userService: UserService,
+    private titleVisibilityService: TitleVisibilityService,
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.titleVisibilityService.titleVisibility$.subscribe(
+      (titleVisibility: boolean) => {
+        this.titleVisibility = titleVisibility;
+      }
+    );
+  }
 
   increment(counter: Counter) {
     const incrementedCount = counter.totalCount + 1;

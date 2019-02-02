@@ -21,7 +21,7 @@ export class CounterDashboardComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(CreateCounterDialogComponent);
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: string) => {
       if (result) {
         this.counterService.addCounter(result);
       }
