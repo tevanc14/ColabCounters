@@ -6,13 +6,16 @@
   top: $toolbar-height;
   left: 0;
 
-  padding-bottom: 70px;
   margin: 0;
   width: 100%;
   height: 100%;
 
   background-color: $theme-background;
   overflow-y: auto;
+}
+
+.counter-container {
+  padding-bottom: $toolbar-height;
 }
 
 .add-button {

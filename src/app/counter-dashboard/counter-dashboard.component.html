@@ -1,24 +1,26 @@
 <app-toolbar></app-toolbar>
-<div class="dashboard-page"
-     fxLayout="row wrap"
-     fxLayoutAlign="space-evenly center">
+<div class="dashboard-page">
+  <div class="counter-container"
+       fxLayout="row wrap"
+       fxLayoutAlign="space-evenly center">
 
-  <ng-container *ngIf="(counterService.counters$ | async) as counters; else loading">
-    <ng-container *ngFor="let counter of counters">
-      <app-counter [counter]="counter"></app-counter>
+    <ng-container *ngIf="(counterService.counters$ | async) as counters; else loading">
+      <ng-container *ngFor="let counter of counters">
+        <app-counter [counter]="counter"></app-counter>
+      </ng-container>
+      <button mat-fab
+              (click)="openCreateCounterDialog()"
+              class="add-button"
+              color="accent">
+        <mat-icon>add</mat-icon>
+      </button>
     </ng-container>
-    <button mat-fab
-            (click)="openCreateCounterDialog()"
-            class="add-button"
-            color="accent">
-      <mat-icon>add</mat-icon>
-    </button>
-  </ng-container>
 
-  <ng-template #loading>
-    <mat-progress-spinner class="loading-spinner"
-                          color="accent"
-                          mode="indeterminate">
-    </mat-progress-spinner>
-  </ng-template>
+    <ng-template #loading>
+      <mat-progress-spinner class="loading-spinner"
+                            color="accent"
+                            mode="indeterminate">
+      </mat-progress-spinner>
+    </ng-template>
+  </div>
 </div>

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.21.2] - 2019-02-07
+
+Changed
+
+- Fix the top of the dashboard being cut off on smaller screens
+
 ## [0.21.1] - 2019-02-02
 
 Changed
