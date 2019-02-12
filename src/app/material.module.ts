@@ -15,7 +15,8 @@ import {
   MatSlideToggleModule,
   MatSnackBarModule,
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule
 } from "@angular/material";
 import { NgModule } from "@angular/core";
 
@@ -37,7 +38,8 @@ import { NgModule } from "@angular/core";
     MatSlideToggleModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -56,7 +58,8 @@ import { NgModule } from "@angular/core";
     MatSlideToggleModule,
     MatSnackBarModule,
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ]
 })
 export class MaterialModule {}

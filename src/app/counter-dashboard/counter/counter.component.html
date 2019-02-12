@@ -4,7 +4,8 @@
 
   <button mat-mini-fab
           class="menu-button"
-          [matMenuTriggerFor]="menu">
+          [matMenuTriggerFor]="menu"
+          matTooltip="Counter menu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
@@ -19,13 +20,13 @@
       <span>Collaborate</span>
     </button>
     <button mat-menu-item
-            *ngIf=createdByCurrentUser()
+            [disabled]=!createdByCurrentUser()
             (click)="openEditNameDialog()">
       <mat-icon>edit</mat-icon>
       <span>Edit name</span>
     </button>
     <button mat-menu-item
-            *ngIf=createdByCurrentUser()
+            [disabled]=!createdByCurrentUser()
             (click)="openConfirmDeleteDialog()">
       <mat-icon>delete</mat-icon>
       <span>Delete</span>

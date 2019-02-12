@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.22.0] - 2019-02-11
+
+Added
+
+- Tooltips to buttons where applicable
+
+Changed
+
+- Instead of hiding buttons you don't have permission to interact with, disable them
+
 ## [0.21.2] - 2019-02-07
 
 Changed
