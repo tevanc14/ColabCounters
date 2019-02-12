@@ -26,6 +26,12 @@ export interface DialogData {
   counter: Counter;
 }
 
+export interface CollaboratorConfiguration {
+  canWrite: boolean;
+  canShare: boolean;
+  canDelete: boolean;
+}
+
 @Component({
   selector: "app-collaborator-dialog",
   templateUrl: "./collaborator-dialog.component.html",
@@ -37,11 +43,7 @@ export class CollaboratorDialogComponent implements OnInit {
   counter: Counter;
   users$: Observable<User[]>;
 
-  collaboratorConfiguration = {
-    canRead: true,
-    canShare: true,
-    canWrite: true
-  };
+  collaboratorConfiguration: CollaboratorConfiguration;
 
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -49,6 +51,10 @@ export class CollaboratorDialogComponent implements OnInit {
   filteredEmails: Observable<string[]>;
   emailsToBeAdded: string[] = [];
   allEmails: string[] = [];
+
+  editingExistingCollaborator = false;
+  oldCollaboratorConfiguration: CollaboratorConfiguration;
+  selectedUser: User;
 
   @ViewChild("collaboratorInput") collaboratorInput: ElementRef<
     HTMLInputElement
@@ -61,16 +67,18 @@ export class CollaboratorDialogComponent implements OnInit {
     public counterService: CounterService,
     public dialogRef: MatDialogRef<CollaboratorDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.counter = this.data.counter;
     this.users$ = this.userService.subscribeToUserService();
     this.collaboratorIds = this.getCollaboratorIds();
     this.collaboratorUsers$ = this.getCollaborators();
     this.allEmails = this.getEmailsFromUsers();
     this.filteredEmails = this.initializeFilteredEmails();
+    this.collaboratorConfiguration = this.defaultCollaboratorConfiguration();
+    this.oldCollaboratorConfiguration = this.defaultCollaboratorConfiguration();
   }
-
-  ngOnInit() {}
 
   initializeFilteredEmails() {
     return this.emailControl.valueChanges.pipe(
@@ -85,6 +93,14 @@ export class CollaboratorDialogComponent implements OnInit {
         });
       })
     );
+  }
+
+  defaultCollaboratorConfiguration() {
+    return {
+      canWrite: true,
+      canShare: true,
+      canDelete: false
+    };
   }
 
   getCollaboratorIds() {
@@ -108,17 +124,16 @@ export class CollaboratorDialogComponent implements OnInit {
   }
 
   addCollaborators() {
+    if (this.emailsToBeAdded.length === 0) {
+      return;
+    }
+
     this.users$.subscribe((users: User[]) => {
       this.emailsToBeAdded.forEach(email => {
         const user = this.getUserFromEmail(email, users);
         this.counterService.addCollaborator(
           this.counter.counterId,
-          new Collaborator(
-            user.userId,
-            this.collaboratorConfiguration.canRead,
-            this.collaboratorConfiguration.canWrite,
-            this.collaboratorConfiguration.canShare
-          )
+          this.buildCollaborator(user.userId, this.collaboratorConfiguration)
         );
       });
     });
@@ -126,16 +141,14 @@ export class CollaboratorDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  getUserFromEmail(emailAddress: string, users: User[]): any {
-    for (const user of users) {
-      if (
+  getUserFromEmail(emailAddress: string, users: User[]): User {
+    return users.find((user: User) => {
+      return (
         !this.isExistingCollaborator(user) &&
         user.emailAddress === emailAddress &&
         user.userId !== this.userService.user.userId
-      ) {
-        return user;
-      }
-    }
+      );
+    });
   }
 
   isCreator(user: User) {
@@ -195,5 +208,86 @@ export class CollaboratorDialogComponent implements OnInit {
     return this.allEmails.filter(email => {
       return email.indexOf(value) === 0;
     });
+  }
+
+  editButtonClick(user: User) {
+    if (this.editingExistingCollaborator) {
+      this.cancelEditing();
+    } else {
+      this.editCollaborator(user);
+    }
+  }
+
+  editCollaborator(user: User) {
+    this.selectedUser = user;
+    const collaborator = this.getCollaborator(user.userId);
+    this.populateCollaboratorConfiguration(collaborator);
+    Object.assign(
+      this.oldCollaboratorConfiguration,
+      this.collaboratorConfiguration
+    );
+    this.editingExistingCollaborator = true;
+  }
+
+  getCollaborator(userId: string): Collaborator {
+    return this.counter.collaborators.find((collaborator: Collaborator) => {
+      return collaborator.userId === userId;
+    });
+  }
+
+  populateCollaboratorConfiguration(collaborator: Collaborator) {
+    this.collaboratorConfiguration.canWrite = collaborator.canWrite;
+    this.collaboratorConfiguration.canShare = collaborator.canShare;
+    this.collaboratorConfiguration.canDelete = collaborator.canDelete;
+  }
+
+  cancelEditing() {
+    Object.assign(this.oldCollaboratorConfiguration, {});
+    this.editingExistingCollaborator = false;
+    Object.assign(
+      this.collaboratorConfiguration,
+      this.defaultCollaboratorConfiguration()
+    );
+  }
+
+  updateCollaborator() {
+    const oldCollaborator = this.buildCollaborator(
+      this.selectedUser.userId,
+      this.oldCollaboratorConfiguration
+    );
+    const newCollaborator = this.buildCollaborator(
+      this.selectedUser.userId,
+      this.collaboratorConfiguration
+    );
+    this.counterService.updateCollaborator(
+      this.counter.counterId,
+      oldCollaborator,
+      newCollaborator
+    );
+    this.dialogRef.close();
+  }
+
+  buildCollaborator(
+    userId: string,
+    configuration: CollaboratorConfiguration
+  ): Collaborator {
+    return new Collaborator(
+      userId,
+      true,
+      configuration.canWrite,
+      configuration.canShare,
+      configuration.canDelete
+    );
+  }
+
+  removeCollaborator() {
+    this.counterService.removeCollaborator(
+      this.counter.counterId,
+      this.buildCollaborator(
+        this.selectedUser.userId,
+        this.collaboratorConfiguration
+      )
+    );
+    this.dialogRef.close();
   }
 }

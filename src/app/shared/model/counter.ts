@@ -13,7 +13,8 @@ export class Collaborator {
     public userId: string,
     public canRead: boolean = false,
     public canWrite: boolean = false,
-    public canShare: boolean = false
+    public canShare: boolean = false,
+    public canDelete: boolean = false
   ) {}
 }
 

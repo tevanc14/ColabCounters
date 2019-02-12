@@ -1,5 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Counter, Count, CountType } from "../../shared/model/counter";
+import {
+  Counter,
+  Count,
+  CountType,
+  Collaborator
+} from "../../shared/model/counter";
 import { CounterService } from "./../../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
 import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
@@ -17,6 +22,7 @@ import { CounterNameDialogComponent } from "../counter-name-dialog/counter-name-
 export class CounterComponent implements OnInit {
   @Input() counter: Counter;
   titleVisibility: boolean;
+  collaborator: Collaborator;
 
   constructor(
     private counterService: CounterService,
@@ -29,6 +35,12 @@ export class CounterComponent implements OnInit {
     this.titleVisibilityService.titleVisibility$.subscribe(
       (titleVisibility: boolean) => {
         this.titleVisibility = titleVisibility;
+      }
+    );
+
+    this.collaborator = this.counter.collaborators.find(
+      (collaborator: Collaborator) => {
+        return collaborator.userId === this.userService.user.userId;
       }
     );
   }
@@ -103,7 +115,15 @@ export class CounterComponent implements OnInit {
     });
   }
 
-  createdByCurrentUser() {
-    return this.counter.createdBy === this.userService.user.userId;
+  canWrite() {
+    return this.collaborator.canWrite;
+  }
+
+  canShare() {
+    return this.collaborator.canShare;
+  }
+
+  canDelete() {
+    return this.collaborator.canDelete;
   }
 }

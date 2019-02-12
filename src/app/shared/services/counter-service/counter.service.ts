@@ -76,7 +76,7 @@ export class CounterService {
       0,
       [],
       now,
-      [new Collaborator(this.userService.user.userId, true, true, true)],
+      [new Collaborator(this.userService.user.userId, true, true, true, true)],
       CounterStatus.Active,
       this.userService.user.userId,
       now
@@ -102,6 +102,23 @@ export class CounterService {
         Object.assign({}, collaborator)
       )
     });
+  }
+
+  removeCollaborator(counterId: string, collaborator: Collaborator) {
+    this.db.doc(`counters/${counterId}`).update({
+      collaborators: firestore.FieldValue.arrayRemove(
+        Object.assign({}, collaborator)
+      )
+    });
+  }
+
+  updateCollaborator(
+    counterId: string,
+    oldCollaborator: Collaborator,
+    newCollaborator: Collaborator
+  ) {
+    this.removeCollaborator(counterId, oldCollaborator);
+    this.addCollaborator(counterId, newCollaborator);
   }
 
   updateCountersCreated(userId: string, activeCreatedCounters: number) {

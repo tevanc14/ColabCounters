@@ -1,3 +1,4 @@
+<h1 mat-dialog-title>{{counter.name}}</h1>
 <div class="dialog-container"
      fxLayout="row">
   <mat-list class="left-panel"
@@ -5,6 +6,12 @@
     <div mat-subheader>Collaborators (*Creator)</div>
     <ng-container *ngIf="(collaboratorUsers$ | async) as collaboratorUsers">
       <mat-list-item *ngFor="let collaboratorUser of collaboratorUsers">
+        <button mat-icon-button
+                (click)="editButtonClick(collaboratorUser)"
+                *ngIf="!isCreator(collaboratorUser)"
+                matTooltip="Edit collaborator privileges">
+          <mat-icon>edit</mat-icon>
+        </button>
         {{ collaboratorUser.emailAddress }}
         <sup *ngIf="isCreator(collaboratorUser)">*</sup>
       </mat-list-item>
@@ -15,7 +22,7 @@
        fxLayout="column">
 
     <mat-form-field class="email-input"
-                    *ngIf="allEmails.length > 0">
+                    *ngIf="allEmails.length > 0 && !this.editingExistingCollaborator">
       <mat-chip-list #chipList>
         <mat-chip *ngFor="let email of emailsToBeAdded"
                   (removed)="removeCollaboratorEmail(email)">
@@ -40,29 +47,60 @@
       </mat-autocomplete>
     </mat-form-field>
 
+    <mat-form-field class="email-input"
+                    *ngIf="editingExistingCollaborator">
+      <input matInput
+             type="text"
+             [ngModel]="selectedUser.emailAddress"
+             disabled>
+    </mat-form-field>
+
     <mat-list>
       <div mat-subheader>Permissions</div>
       <mat-list-item>
-        <mat-slide-toggle [(ngModel)]="collaboratorConfiguration.canRead"
-                          color="primary"
-                          disabled>Read</mat-slide-toggle>
-      </mat-list-item>
-      <mat-list-item>
         <mat-slide-toggle [(ngModel)]="collaboratorConfiguration.canWrite"
-                          color="primary"
-                          disabled>Write</mat-slide-toggle>
+                          color="primary">Write</mat-slide-toggle>
       </mat-list-item>
       <mat-list-item>
         <mat-slide-toggle [(ngModel)]="collaboratorConfiguration.canShare"
-                          color="primary"
-                          disabled>Share</mat-slide-toggle>
+                          color="primary">Share</mat-slide-toggle>
+      </mat-list-item>
+      <mat-list-item>
+        <mat-slide-toggle [(ngModel)]="collaboratorConfiguration.canDelete"
+                          color="primary">Delete</mat-slide-toggle>
       </mat-list-item>
     </mat-list>
 
+    <span fxFlex></span>
+
     <button mat-fab
             (click)="addCollaborators()"
-            class="add-collaborators">
+            *ngIf="!editingExistingCollaborator"
+            class="add-collaborators"
+            matTooltip="Add collaborators">
       <mat-icon>group_add</mat-icon>
     </button>
+
+    <div class="edit-action-buttons"
+         *ngIf="editingExistingCollaborator"
+         fxLayout="row"
+         fxLayoutAlign="space-between end">
+      <button mat-stroked-button
+              (click)="removeCollaborator()"
+              color="warn"
+              matTooltip="Remove collaborator">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-stroked-button
+              (click)="cancelEditing()"
+              matTooltip="Cancel editing">
+        <mat-icon>cancel</mat-icon>
+      </button>
+      <button mat-stroked-button
+              (click)="updateCollaborator()"
+              matTooltip="Save configuration">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
   </div>
 </div>

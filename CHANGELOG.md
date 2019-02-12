@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.23.0] - 2019-02-11
+
+Added
+
+- Able to edit collaborators
+  - Change privileges
+  - Remove collaborators
+- Restrict abilities based on collaborator privileges
+
+Removed
+
+- canRead option from UI as there is no current use case (kept in the data just in case)
+
 ## [0.22.0] - 2019-02-11
 
 Added

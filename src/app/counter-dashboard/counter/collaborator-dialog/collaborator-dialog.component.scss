@@ -1,16 +1,19 @@
+$panel-padding: 16px;
+$panel-width: 300px;
+
 .dialog-container {
   height: 400px;
 }
 
 .left-panel {
-  width: 300px;
+  width: $panel-width;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 .right-panel {
   position: relative;
-  width: 300px;
+  width: $panel-width;
 }
 
 .add-collaborators {
@@ -21,6 +24,10 @@
 
 .email-input {
   width: 100%;
-  padding: 16px;
+  padding: $panel-padding;
   box-sizing: border-box;
+}
+
+.edit-action-buttons {
+  padding: $panel-padding;
 }

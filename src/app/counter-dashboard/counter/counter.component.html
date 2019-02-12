@@ -10,23 +10,24 @@
   </button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item
-            (click)=openDetailsDialog()>
+            (click)="openDetailsDialog()">
       <mat-icon>timeline</mat-icon>
       <span>Statistics</span>
     </button>
     <button mat-menu-item
-            (click)=openCollaboratorDialog()>
+            [disabled]="!canShare()"
+            (click)="openCollaboratorDialog()">
       <mat-icon>group</mat-icon>
       <span>Collaborate</span>
     </button>
     <button mat-menu-item
-            [disabled]=!createdByCurrentUser()
+            [disabled]="!canWrite()"
             (click)="openEditNameDialog()">
       <mat-icon>edit</mat-icon>
       <span>Edit name</span>
     </button>
     <button mat-menu-item
-            [disabled]=!createdByCurrentUser()
+            [disabled]="!canDelete()"
             (click)="openConfirmDeleteDialog()">
       <mat-icon>delete</mat-icon>
       <span>Delete</span>
@@ -40,11 +41,13 @@
        fxLayoutAlign="space-between">
     <button mat-raised-button
             (click)="decrement(counter)"
+            [disabled]="!canWrite()"
             color="primary">
       -
     </button>
     <button mat-raised-button
             (click)="increment(counter)"
+            [disabled]="!canWrite()"
             color="primary">
       +
     </button>
