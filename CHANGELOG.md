@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.0] - 2019-01-12
+
+Added
+
+- The enter key submits applicable forms
+  - Create counter
+  - Edit counter name
+  - Sign in
+  - Sign up
+  - Forgot password
+- SnackBar notifications for authentication errors
+
 ## [0.24.0] - 2019-01-12
 
 Added

@@ -1,17 +1,15 @@
 <div fxLayout="column"
      fxLayoutAlign="space-evenly">
   <h1 mat-dialog-title>{{title}}</h1>
-  <div mat-dialog-content>
+  <div mat-dialog-content
+       (keyup.enter)="create()">
     <mat-form-field hintLabel="Max 50 characters">
       <mat-label>Name</mat-label>
-      <textarea matInput
-                class="counter-name"
-                maxLength="50"
-                matAutosizeMinRows=1
-                matTextareaAutosize
-                [formControl]="counterName"
-                required>
-    </textarea>
+      <input matInput
+             class="counter-name"
+             maxLength="50"
+             [formControl]="counterName"
+             required>
       <mat-error *ngIf="counterName.invalid">{{ getErrorMessage() }}</mat-error>
     </mat-form-field>
   </div>
@@ -21,7 +19,6 @@
     <button mat-button
             (click)="cancel()">Cancel</button>
     <button mat-raised-button
-            type="submit"
             color="primary"
             (click)="create()">
       Create

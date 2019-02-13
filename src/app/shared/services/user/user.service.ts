@@ -79,7 +79,7 @@ export class UserService {
       );
       this.finishLogin(result);
     } catch (error) {
-      window.alert(error.message);
+      throw error;
     }
   }
 
@@ -92,7 +92,7 @@ export class UserService {
       this.sendVerificationEmail();
       this.setUserData(new User(result.user));
     } catch (error) {
-      window.alert(error.message);
+      throw error;
     }
   }
 

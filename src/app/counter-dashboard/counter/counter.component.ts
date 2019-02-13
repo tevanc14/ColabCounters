@@ -107,7 +107,9 @@ export class CounterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: string) => {
-      this.snackBar.open(result, "Close", { duration: 5000 });
+      if (result) {
+        this.snackBar.open(result, "Close", { duration: 5000 });
+      }
     });
   }
 
