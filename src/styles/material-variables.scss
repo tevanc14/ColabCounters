@@ -15,4 +15,8 @@ $theme-accent-dark: mat-color($theme-accent-map, darker);
 $theme-foreground-map: map-get($current-theme, foreground);
 $theme-text: map-get($theme-foreground-map, text);
 $theme-background-map: map-get($current-theme, background);
-$theme-background: map-get($theme-background-map, background)
+$theme-background: map-get($theme-background-map, background);
+
+.current-theme {
+  @include angular-material-theme($current-theme)
+}

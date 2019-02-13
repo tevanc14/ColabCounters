@@ -6,7 +6,7 @@ import {
   Collaborator
 } from "../../shared/model/counter";
 import { CounterService } from "./../../shared/services/counter-service/counter.service";
-import { MatDialog } from "@angular/material";
+import { MatDialog, MatSnackBar } from "@angular/material";
 import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
 import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
 import { UserService } from "src/app/shared/services/user/user.service";
@@ -28,7 +28,8 @@ export class CounterComponent implements OnInit {
     private counterService: CounterService,
     private userService: UserService,
     private titleVisibilityService: TitleVisibilityService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -85,6 +86,11 @@ export class CounterComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.delete();
+        this.snackBar.open(
+          `The "${this.counter.name}" counter was deleted`,
+          "Close",
+          { duration: 5000 }
+        );
       }
     });
   }
@@ -96,8 +102,12 @@ export class CounterComponent implements OnInit {
   }
 
   openCollaboratorDialog() {
-    this.dialog.open(CollaboratorDialogComponent, {
+    const dialogRef = this.dialog.open(CollaboratorDialogComponent, {
       data: { counter: this.counter }
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      this.snackBar.open(result, "Close", { duration: 5000 });
     });
   }
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.24.0] - 2019-01-12
+
+Added
+
+- SnackBar notifications when performing certain operations
+  - Deleting a counter
+  - Adding collaborators
+  - Editing collaborator privileges
+
 ## [0.23.0] - 2019-02-11
 
 Added
