@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/shared/services/user/user.service";
 import { User } from "src/app/shared/model/user";
-import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
 import {
   CounterService,
   SortType
-} from "src/app/shared/services/counter-service/counter.service";
+} from "src/app/shared/service/counter/counter.service";
+import { TitleVisibilityService } from "src/app/shared/service/title-visibility/title-visibility.service";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 @Component({
   selector: "app-toolbar",
@@ -23,7 +23,7 @@ export class ToolbarComponent implements OnInit {
     private titleVisibilityService: TitleVisibilityService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.titleVisibilityService.titleVisibility$.subscribe(
       (titleVisibility: boolean) => {
         this.titleVisibility = titleVisibility;
@@ -31,15 +31,15 @@ export class ToolbarComponent implements OnInit {
     );
   }
 
-  hasUserPhoto(user: User) {
+  hasUserPhoto(user: User): boolean {
     return user.photoURL !== null;
   }
 
-  setTitleVisibility(visibility: boolean) {
+  setTitleVisibility(visibility: boolean): void {
     this.titleVisibilityService.changeVisibility(visibility);
   }
 
-  changeCounterSortType(sortType: SortType) {
+  changeCounterSortType(sortType: SortType): void {
     this.counterService.changeSortType(sortType);
   }
 }

@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.0] - 2019-02-16
+
+Added
+
+- README
+
+Changed
+
+- Alphabetized imports
+- Altered import paths to absolute
+
+Removed
+
+- All tests (e2e and unit) as they would not provide enough value to write
+- Inner page guard as it was not being used
+
 ## [0.25.0] - 2019-01-12
 
 Added

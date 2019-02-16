@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material";
-import { Counter, Count, CountType } from "src/app/shared/model/counter";
-import { UserService } from "src/app/shared/services/user/user.service";
+import { Component, Inject, OnInit } from "@angular/core";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Count, Counter, CountType } from "src/app/shared/model/counter";
 import { User } from "src/app/shared/model/user";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 export interface DialogData {
   counter: Counter;
@@ -53,13 +53,13 @@ export class CounterDetailsDialogComponent implements OnInit {
     this.buildCountsPerUser();
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   hasCounts(): boolean {
     return this.counter.counts.length > 0;
   }
 
-  buildCumulativeCounts() {
+  buildCumulativeCounts(): void {
     this.cumulativeCounts.push({ name: this.counter.name, series: [] });
     this.counter.counts.forEach(count => {
       this.cumulativeCounts[0].series.push({
@@ -69,12 +69,12 @@ export class CounterDetailsDialogComponent implements OnInit {
     });
   }
 
-  buildDailyCounts() {
+  buildDailyCounts(): void {
     const dateBuckets: any = this.buildDateBuckets();
     this.extractDailyCountsFromObject(dateBuckets);
   }
 
-  buildDateBuckets() {
+  buildDateBuckets(): void {
     const dateBuckets: any = {};
     this.counter.counts.forEach((count: Count) => {
       const dateString = this.timestampToDateString(count.timestamp);
@@ -99,7 +99,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     }
   }
 
-  extractDailyCountsFromObject(dateBuckets) {
+  extractDailyCountsFromObject(dateBuckets: []): void {
     for (const key in dateBuckets) {
       if (dateBuckets.hasOwnProperty(key)) {
         this.dailyCounts.push({
@@ -110,13 +110,13 @@ export class CounterDetailsDialogComponent implements OnInit {
     }
   }
 
-  buildCountsPerUser() {
+  buildCountsPerUser(): void {
     this.getUserIdMap();
     const userCountBuckets: any = this.buildUserCountBuckets();
     this.extractUserCountsFromObject(userCountBuckets);
   }
 
-  buildUserCountBuckets() {
+  buildUserCountBuckets(): any {
     const userCountBuckets: any = {};
     this.counter.counts.forEach((count: Count) => {
       const emailAddress = this.userMap[count.userId];
@@ -130,7 +130,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     return userCountBuckets;
   }
 
-  extractUserCountsFromObject(userCountBuckets) {
+  extractUserCountsFromObject(userCountBuckets): void {
     for (const key in userCountBuckets) {
       if (userCountBuckets.hasOwnProperty(key)) {
         this.userCounts.push({
@@ -141,7 +141,7 @@ export class CounterDetailsDialogComponent implements OnInit {
     }
   }
 
-  getUserIdMap() {
+  getUserIdMap(): void {
     this.userService.users$.subscribe((users: User[]) => {
       for (const user of users) {
         this.userMap[user.userId] = user.emailAddress;

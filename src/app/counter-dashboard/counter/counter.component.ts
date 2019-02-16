@@ -1,18 +1,18 @@
-import { Component, OnInit, Input } from "@angular/core";
-import {
-  Counter,
-  Count,
-  CountType,
-  Collaborator
-} from "../../shared/model/counter";
-import { CounterService } from "./../../shared/services/counter-service/counter.service";
+import { Component, Input, OnInit } from "@angular/core";
 import { MatDialog, MatSnackBar } from "@angular/material";
-import { CounterDetailsDialogComponent } from "./counter-details-dialog/counter-details-dialog.component";
-import { CollaboratorDialogComponent } from "./collaborator-dialog/collaborator-dialog.component";
-import { UserService } from "src/app/shared/services/user/user.service";
-import { TitleVisibilityService } from "src/app/shared/services/title-visibility/title-visibility.service";
-import { ConfirmDeleteDialogComponent } from "./confirm-delete-dialog/confirm-delete-dialog.component";
-import { CounterNameDialogComponent } from "../counter-name-dialog/counter-name-dialog.component";
+import { CounterNameDialogComponent } from "src/app/counter-dashboard/counter-name-dialog/counter-name-dialog.component";
+import { CollaboratorDialogComponent } from "src/app/counter-dashboard/counter/collaborator-dialog/collaborator-dialog.component";
+import { ConfirmDeleteDialogComponent } from "src/app/counter-dashboard/counter/confirm-delete-dialog/confirm-delete-dialog.component";
+import { CounterDetailsDialogComponent } from "src/app/counter-dashboard/counter/counter-details-dialog/counter-details-dialog.component";
+import {
+  Collaborator,
+  Count,
+  Counter,
+  CountType
+} from "src/app/shared/model/counter";
+import { CounterService } from "src/app/shared/service/counter/counter.service";
+import { TitleVisibilityService } from "src/app/shared/service/title-visibility/title-visibility.service";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 @Component({
   selector: "app-counter",
@@ -32,7 +32,7 @@ export class CounterComponent implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.titleVisibilityService.titleVisibility$.subscribe(
       (titleVisibility: boolean) => {
         this.titleVisibility = titleVisibility;
@@ -41,29 +41,33 @@ export class CounterComponent implements OnInit {
 
     this.collaborator = this.counter.collaborators.find(
       (collaborator: Collaborator) => {
-        return collaborator.userId === this.userService.user.userId;
+        return collaborator.userId === this.userService.currentUser.userId;
       }
     );
   }
 
-  increment(counter: Counter) {
+  increment(counter: Counter): void {
     const incrementedCount = counter.totalCount + 1;
     this.updateTotalCount(incrementedCount, counter, CountType.Increment);
   }
 
-  decrement(counter: Counter) {
+  decrement(counter: Counter): void {
     if (counter.totalCount > 0) {
       const decrementedCount = counter.totalCount - 1;
       this.updateTotalCount(decrementedCount, counter, CountType.Decrement);
     }
   }
 
-  updateTotalCount(newCount: number, counter: Counter, countType: CountType) {
+  updateTotalCount(
+    newCount: number,
+    counter: Counter,
+    countType: CountType
+  ): void {
     const now = new Date();
     counter.counts.push(
       Object.assign(
         {},
-        new Count(newCount, countType, now, this.userService.user.userId)
+        new Count(newCount, countType, now, this.userService.currentUser.userId)
       )
     );
     const update = {
@@ -74,11 +78,11 @@ export class CounterComponent implements OnInit {
     this.counterService.updateCounter(counter.counterId, update);
   }
 
-  delete() {
+  delete(): void {
     this.counterService.deleteCounter(this.counter);
   }
 
-  openConfirmDeleteDialog() {
+  openConfirmDeleteDialog(): void {
     const dialogRef = this.dialog.open(ConfirmDeleteDialogComponent, {
       data: { counter: this.counter }
     });
@@ -95,13 +99,13 @@ export class CounterComponent implements OnInit {
     });
   }
 
-  openDetailsDialog() {
+  openDetailsDialog(): void {
     this.dialog.open(CounterDetailsDialogComponent, {
       data: { counter: this.counter }
     });
   }
 
-  openCollaboratorDialog() {
+  openCollaboratorDialog(): void {
     const dialogRef = this.dialog.open(CollaboratorDialogComponent, {
       data: { counter: this.counter }
     });
@@ -113,7 +117,7 @@ export class CounterComponent implements OnInit {
     });
   }
 
-  openEditNameDialog() {
+  openEditNameDialog(): void {
     const dialogRef = this.dialog.open(CounterNameDialogComponent, {
       data: { title: "Edit counter name" }
     });
@@ -127,15 +131,15 @@ export class CounterComponent implements OnInit {
     });
   }
 
-  canWrite() {
+  canWrite(): boolean {
     return this.collaborator.canWrite;
   }
 
-  canShare() {
+  canShare(): boolean {
     return this.collaborator.canShare;
   }
 
-  canDelete() {
+  canDelete(): boolean {
     return this.collaborator.canDelete;
   }
 }

@@ -8,7 +8,7 @@ export class TitleVisibilityService {
 
   constructor() {}
 
-  changeVisibility(visibility: boolean) {
+  changeVisibility(visibility: boolean): void {
     this.titleVisibility.next(visibility);
   }
 }

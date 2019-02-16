@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/shared/services/user/user.service";
 import { MatSnackBar } from "@angular/material";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 @Component({
   selector: "app-sign-in",
@@ -13,9 +13,9 @@ export class SignInComponent implements OnInit {
 
   constructor(public userService: UserService, private snackBar: MatSnackBar) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  emailSignIn() {
+  emailSignIn(): void {
     this.userService.signIn(this.emailAddress, this.password).catch(error => {
       console.error(error);
       this.snackBar.open(error.message, "Close", { duration: 5000 });

@@ -7,7 +7,7 @@
           [matMenuTriggerFor]="options"
           matTooltip="User menu"
           mat-icon-button>
-    <div *ngIf="(userService.user$ | async) as user">
+    <div *ngIf="(userService.currentUser$ | async) as user">
       <div *ngIf="hasUserPhoto(user); else noUserPhoto">
         <img class="google-photo"
              alt="user.displayName"

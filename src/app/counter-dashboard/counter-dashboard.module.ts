@@ -1,19 +1,19 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { CounterComponent } from "./counter/counter.component";
-import { CounterDashboardComponent } from "./counter-dashboard.component";
-import { CounterService } from "./../shared/services/counter-service/counter.service";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { MaterialModule } from "../material.module";
-import { CounterNameDialogComponent } from "./counter-name-dialog/counter-name-dialog.component";
-import { ToolbarComponent } from "./toolbar/toolbar.component";
-import { AppRoutingModule } from "../app-routing.module";
-import { CounterDetailsDialogComponent } from "./counter/counter-details-dialog/counter-details-dialog.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
-import { CollaboratorDialogComponent } from "./counter/collaborator-dialog/collaborator-dialog.component";
-import { TitleVisibilityService } from "../shared/services/title-visibility/title-visibility.service";
-import { ConfirmDeleteDialogComponent } from "./counter/confirm-delete-dialog/confirm-delete-dialog.component";
+import { CounterDashboardComponent } from "src/app/counter-dashboard/counter-dashboard.component";
+import { CounterNameDialogComponent } from "src/app/counter-dashboard/counter-name-dialog/counter-name-dialog.component";
+import { CollaboratorDialogComponent } from "src/app/counter-dashboard/counter/collaborator-dialog/collaborator-dialog.component";
+import { ConfirmDeleteDialogComponent } from "src/app/counter-dashboard/counter/confirm-delete-dialog/confirm-delete-dialog.component";
+import { CounterDetailsDialogComponent } from "src/app/counter-dashboard/counter/counter-details-dialog/counter-details-dialog.component";
+import { CounterComponent } from "src/app/counter-dashboard/counter/counter.component";
+import { ToolbarComponent } from "src/app/counter-dashboard/toolbar/toolbar.component";
+import { MaterialModule } from "src/app/material.module";
+import { AppRoutingModule } from "src/app/routing.module";
+import { CounterService } from "src/app/shared/service/counter/counter.service";
+import { TitleVisibilityService } from "src/app/shared/service/title-visibility/title-visibility.service";
 
 @NgModule({
   declarations: [

@@ -1,27 +1,39 @@
-# Counters
+# Colab Counters
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.3.
+A web application for managing shared counters. This came about when wanting to track how many bags of chips each member of the dev team could eat in a certain period of time. It started as an application one would use in application and was named Counters (and a perfect fit for a NoSQL). After its initial version was complete, a coworker thought that being able to share counters would be great. And Colab Counters was born. This was no longer a good fit for a NoSQL model as data either had to be replicated or janky joins were done. This was deemed acceptable and will work well at a small scale.
 
-## Development server
+## Features
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Firebase
 
-## Code scaffolding
+- Authentication via Google or email/password
+- Storage using Cloud Firestore
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Dashboard capabilities
 
-## Build
+- Display Google photo
+- Switch between sort types
+- Hide counter names
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Counter interactions
 
-## Running unit tests
+- Create (up to 10) counters
+- Increment/decrement a counter
+- Alter name of counter
+- Edit counter name
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Collaboration
 
-## Running end-to-end tests
+- Share a counter through an autocompleted list of all users
+- Edit privileges of a collaborator
+- Restrict collaborator abilities based on privileges
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Statistics
 
-## Further help
+Show stats for each counter
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+- A cumulative count over time
+- The daily cumulative count
+- The cumulative count per user
+
+[Change log](CHANGELOG.md)

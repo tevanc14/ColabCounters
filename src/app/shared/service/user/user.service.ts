@@ -1,22 +1,21 @@
 import { Injectable, NgZone } from "@angular/core";
-import { User } from "../../model/user";
-import { auth } from "firebase/app";
 import { AngularFireAuth } from "@angular/fire/auth";
 import {
   AngularFirestore,
-  AngularFirestoreDocument,
-  AngularFirestoreCollection
+  AngularFirestoreCollection,
+  AngularFirestoreDocument
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
-import { Observable, of, BehaviorSubject } from "rxjs";
+import { auth } from "firebase/app";
+import { of, BehaviorSubject, Observable } from "rxjs";
+import { User } from "../../model/user";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
-  // TODO: Are both of these needed? If so rename to currentUser
-  user: User;
-  user$: Observable<User>;
+  currentUser: User;
+  currentUser$: Observable<User>;
   users$: BehaviorSubject<User[]>;
   users: User[] = [];
   localStorageUserKey = "colabCountersUser";
@@ -32,17 +31,17 @@ export class UserService {
     this.userCollection = db.collection<User>("users");
     this.angularFireAuth.authState.subscribe(userData => {
       if (userData) {
-        this.user = new User(userData);
-        this.user$ = of(this.user);
+        this.currentUser = new User(userData);
+        this.currentUser$ = of(this.currentUser);
         this.initializeUserService();
-        this.setLocalStorageUser(this.user);
+        this.setLocalStorageUser(this.currentUser);
       } else {
         this.setLocalStorageUser(null);
       }
     });
   }
 
-  initializeUserService() {
+  initializeUserService(): void {
     if (!this.users$) {
       this.users$ = <BehaviorSubject<User[]>>(
         new BehaviorSubject(new Array<User>())
@@ -63,15 +62,15 @@ export class UserService {
     return JSON.parse(localStorage.getItem(this.localStorageUserKey));
   }
 
-  setLocalStorageUser(user: User) {
+  setLocalStorageUser(user: User): void {
     localStorage.setItem(this.localStorageUserKey, JSON.stringify(user));
   }
 
-  removeLocalStorageUser() {
+  removeLocalStorageUser(): void {
     localStorage.removeItem(this.localStorageUserKey);
   }
 
-  async signIn(email: string, password: string) {
+  async signIn(email: string, password: string): Promise<void> {
     try {
       const result = await this.angularFireAuth.auth.signInWithEmailAndPassword(
         email,
@@ -83,7 +82,7 @@ export class UserService {
     }
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(email: string, password: string): Promise<void> {
     try {
       const result = await this.angularFireAuth.auth.createUserWithEmailAndPassword(
         email,
@@ -96,12 +95,12 @@ export class UserService {
     }
   }
 
-  sendVerificationEmail() {
+  sendVerificationEmail(): void {
     this.angularFireAuth.auth.currentUser.sendEmailVerification();
     this.router.navigate(["verify-email-address"]);
   }
 
-  forgotPassword(passwordResetEmail: string) {
+  forgotPassword(passwordResetEmail: string): any {
     try {
       this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail);
       return { message: "Reset email successfully sent" };
@@ -116,11 +115,11 @@ export class UserService {
     return user !== null && user.emailVerified !== false;
   }
 
-  googleAuth() {
+  googleAuth(): Promise<void> {
     return this.authLogin(new auth.GoogleAuthProvider());
   }
 
-  async authLogin(provider: firebase.auth.AuthProvider) {
+  async authLogin(provider: firebase.auth.AuthProvider): Promise<void> {
     try {
       const result = await this.angularFireAuth.auth.signInWithPopup(provider);
       this.finishLogin(result);
@@ -131,7 +130,7 @@ export class UserService {
     }
   }
 
-  setUserData(user: User) {
+  setUserData(user: User): Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.angularFirestore.doc(
       `users/${user.userId}`
     );
@@ -148,24 +147,24 @@ export class UserService {
     });
   }
 
-  signOut() {
+  signOut(): void {
     this.angularFireAuth.auth.signOut();
     this.removeLocalStorageUser();
     this.router.navigate(["sign-in"]);
   }
 
-  finishLogin(result: firebase.auth.UserCredential) {
+  finishLogin(result: firebase.auth.UserCredential): void {
     this.setUserData(new User(result.user));
     this.ngZone.run(() => {
       this.router.navigate(["dashboard"]);
     });
   }
 
-  updateCountersCreated(userId: string, update: Partial<User>) {
+  updateCountersCreated(userId: string, update: Partial<User>): void {
     this.userCollection.doc(userId).update(update);
   }
 
-  changeActiveCreatedCounters(userId: string, change: number) {
+  changeActiveCreatedCounters(userId: string, change: number): Promise<void> {
     const userDocRef = this.db.firestore.collection("users").doc(userId);
 
     return this.db.firestore.runTransaction(async transaction => {
@@ -181,17 +180,6 @@ export class UserService {
         .catch(error => {
           console.log("Transaction failed: ", error);
         });
-    });
-  }
-
-  getUserFromId(userId: string) {
-    this.users$.subscribe((users: User[]) => {
-      for (const user of users) {
-        if (user.userId === userId) {
-          console.log("returning", user);
-          return user;
-        }
-      }
     });
   }
 }

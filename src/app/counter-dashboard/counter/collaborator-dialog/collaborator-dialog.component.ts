@@ -1,26 +1,26 @@
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import {
   Component,
-  OnInit,
+  ElementRef,
   Inject,
-  ViewChild,
-  ElementRef
+  OnInit,
+  ViewChild
 } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
   MatAutocomplete,
-  MatChipInputEvent,
   MatAutocompleteSelectedEvent,
-  MatAutocompleteTrigger
+  MatAutocompleteTrigger,
+  MatChipInputEvent,
+  MatDialogRef,
+  MAT_DIALOG_DATA
 } from "@angular/material";
-import { Counter, Collaborator } from "src/app/shared/model/counter";
-import { UserService } from "src/app/shared/services/user/user.service";
-import { User } from "src/app/shared/model/user";
-import { CounterService } from "src/app/shared/services/counter-service/counter.service";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
-import { ENTER, COMMA } from "@angular/cdk/keycodes";
-import { FormControl } from "@angular/forms";
+import { Collaborator, Counter } from "src/app/shared/model/counter";
+import { User } from "src/app/shared/model/user";
+import { CounterService } from "src/app/shared/service/counter/counter.service";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 export interface DialogData {
   counter: Counter;
@@ -69,7 +69,7 @@ export class CollaboratorDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.counter = this.data.counter;
     this.users$ = this.userService.subscribeToUserService();
     this.collaboratorIds = this.getCollaboratorIds();
@@ -80,13 +80,12 @@ export class CollaboratorDialogComponent implements OnInit {
     this.oldCollaboratorConfiguration = this.defaultCollaboratorConfiguration();
   }
 
-  initializeFilteredEmails() {
+  initializeFilteredEmails(): Observable<string[]> {
     return this.emailControl.valueChanges.pipe(
       startWith(null),
       map((email: string | null) => {
         return email ? this.filterEmails(email) : this.allEmails.slice();
       }),
-      // TODO: See if can combine with other map
       map(emails => {
         return emails.filter(email => {
           return !this.emailsToBeAdded.includes(email);
@@ -95,7 +94,7 @@ export class CollaboratorDialogComponent implements OnInit {
     );
   }
 
-  defaultCollaboratorConfiguration() {
+  defaultCollaboratorConfiguration(): CollaboratorConfiguration {
     return {
       canWrite: true,
       canShare: true,
@@ -103,7 +102,7 @@ export class CollaboratorDialogComponent implements OnInit {
     };
   }
 
-  getCollaboratorIds() {
+  getCollaboratorIds(): any[] {
     const collaboratorIds = [];
 
     for (const collaborator of this.counter.collaborators) {
@@ -113,7 +112,7 @@ export class CollaboratorDialogComponent implements OnInit {
     return collaboratorIds;
   }
 
-  getCollaborators() {
+  getCollaborators(): Observable<User[]> {
     return this.users$.pipe(
       map(users => {
         return users.filter(user => {
@@ -123,7 +122,7 @@ export class CollaboratorDialogComponent implements OnInit {
     );
   }
 
-  addCollaborators() {
+  addCollaborators(): void {
     if (this.emailsToBeAdded.length === 0) {
       return;
     }
@@ -146,20 +145,20 @@ export class CollaboratorDialogComponent implements OnInit {
       return (
         !this.isExistingCollaborator(user) &&
         user.emailAddress === emailAddress &&
-        user.userId !== this.userService.user.userId
+        user.userId !== this.userService.currentUser.userId
       );
     });
   }
 
-  isCreator(user: User) {
+  isCreator(user: User): boolean {
     return user.userId === this.counter.createdBy;
   }
 
-  isExistingCollaborator(user: User) {
+  isExistingCollaborator(user: User): boolean {
     return this.collaboratorIds.includes(user.userId);
   }
 
-  getEmailsFromUsers() {
+  getEmailsFromUsers(): string[] {
     const emails: string[] = [];
     this.userService.users$.subscribe(users => {
       for (const user of users) {
@@ -210,7 +209,7 @@ export class CollaboratorDialogComponent implements OnInit {
     });
   }
 
-  editButtonClick(user: User) {
+  editButtonClick(user: User): void {
     if (this.editingExistingCollaborator) {
       this.cancelEditing();
     } else {
@@ -218,7 +217,7 @@ export class CollaboratorDialogComponent implements OnInit {
     }
   }
 
-  editCollaborator(user: User) {
+  editCollaborator(user: User): void {
     this.selectedUser = user;
     const collaborator = this.getCollaborator(user.userId);
     this.populateCollaboratorConfiguration(collaborator);
@@ -235,13 +234,13 @@ export class CollaboratorDialogComponent implements OnInit {
     });
   }
 
-  populateCollaboratorConfiguration(collaborator: Collaborator) {
+  populateCollaboratorConfiguration(collaborator: Collaborator): void {
     this.collaboratorConfiguration.canWrite = collaborator.canWrite;
     this.collaboratorConfiguration.canShare = collaborator.canShare;
     this.collaboratorConfiguration.canDelete = collaborator.canDelete;
   }
 
-  cancelEditing() {
+  cancelEditing(): void {
     Object.assign(this.oldCollaboratorConfiguration, {});
     this.editingExistingCollaborator = false;
     Object.assign(
@@ -250,7 +249,7 @@ export class CollaboratorDialogComponent implements OnInit {
     );
   }
 
-  updateCollaborator() {
+  updateCollaborator(): void {
     const oldCollaborator = this.buildCollaborator(
       this.selectedUser.userId,
       this.oldCollaboratorConfiguration
@@ -282,7 +281,7 @@ export class CollaboratorDialogComponent implements OnInit {
     );
   }
 
-  removeCollaborator() {
+  removeCollaborator(): void {
     this.counterService.removeCollaborator(
       this.counter.counterId,
       this.buildCollaborator(

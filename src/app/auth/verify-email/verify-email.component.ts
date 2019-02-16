@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { UserService } from "src/app/shared/services/user/user.service";
 import { MatSnackBar } from "@angular/material";
+import { UserService } from "src/app/shared/service/user/user.service";
 
 @Component({
   selector: "app-verify-email",
@@ -10,15 +10,18 @@ import { MatSnackBar } from "@angular/material";
 export class VerifyEmailComponent implements OnInit {
   constructor(public userService: UserService, public snackBar: MatSnackBar) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
-  resendVerificationEmail() {
+  resendVerificationEmail(): void {
     this.snackBar.open("Verification email sent", "Close", {
       duration: 5000
     });
   }
 
   isSendingVerificationEmail(): boolean {
-    return this.userService.user && !this.userService.user.emailVerified;
+    return (
+      this.userService.currentUser &&
+      !this.userService.currentUser.emailVerified
+    );
   }
 }

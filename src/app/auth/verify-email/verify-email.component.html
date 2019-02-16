@@ -12,7 +12,7 @@
 
     <div *ngIf="isSendingVerificationEmail()">
       <div class="mat-h3">
-        A confirmation email has been sent to <strong>{{ userService.user.emailAddress }}</strong>.
+        A confirmation email has been sent to <strong>{{ userService.currentUser.emailAddress }}</strong>.
       </div>
       <div class="mat-h3">
         Please check your email and click on the provided link to verify your

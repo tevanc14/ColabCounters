@@ -1,3 +1,4 @@
+import { NgModule } from "@angular/core";
 import {
   MatAutocompleteModule,
   MatButtonModule,
@@ -18,7 +19,6 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from "@angular/material";
-import { NgModule } from "@angular/core";
 
 @NgModule({
   imports: [

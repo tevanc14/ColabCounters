@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { CounterService } from "./../shared/services/counter-service/counter.service";
 import { MatDialog } from "@angular/material";
-import { CounterNameDialogComponent } from "./counter-name-dialog/counter-name-dialog.component";
+import { CounterNameDialogComponent } from "src/app/counter-dashboard/counter-name-dialog/counter-name-dialog.component";
+import { CounterService } from "src/app/shared/service/counter/counter.service";
 
 @Component({
   selector: "app-counter-dashboard",
@@ -16,7 +16,7 @@ export class CounterDashboardComponent implements OnInit {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {}
 
   openCreateCounterDialog(): void {
     const dialogRef = this.dialog.open(CounterNameDialogComponent, {
