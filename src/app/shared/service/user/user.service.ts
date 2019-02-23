@@ -7,8 +7,8 @@ import {
 } from "@angular/fire/firestore";
 import { Router } from "@angular/router";
 import { auth } from "firebase/app";
-import { of, BehaviorSubject, Observable } from "rxjs";
-import { User } from "../../model/user";
+import { of, BehaviorSubject, Observable, Subscription } from "rxjs";
+import { User } from "src/app/shared/model/user";
 
 @Injectable({
   providedIn: "root"
@@ -18,6 +18,7 @@ export class UserService {
   currentUser$: Observable<User>;
   users$: BehaviorSubject<User[]>;
   users: User[] = [];
+  usersSubscription: Subscription;
   localStorageUserKey = "colabCountersUser";
   userCollection: AngularFirestoreCollection<User>;
 
@@ -47,10 +48,12 @@ export class UserService {
         new BehaviorSubject(new Array<User>())
       );
 
-      this.userCollection.valueChanges().subscribe(userValueChanges => {
-        this.users = userValueChanges;
-        this.users$.next(userValueChanges);
-      });
+      this.usersSubscription = this.userCollection
+        .valueChanges()
+        .subscribe(userValueChanges => {
+          this.users = userValueChanges;
+          this.users$.next(userValueChanges);
+        });
     }
   }
 
@@ -148,6 +151,7 @@ export class UserService {
   }
 
   signOut(): void {
+    this.usersSubscription.unsubscribe();
     this.angularFireAuth.auth.signOut();
     this.removeLocalStorageUser();
     this.router.navigate(["sign-in"]);

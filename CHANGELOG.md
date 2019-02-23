@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.1.0] - 2019-02-23
+
+Added
+
+- Firestore rules to actually be deployed
+
+Changed
+
+- Unsubscribe from user subscription to prevent Firestore permissions error
+  when logging out
+
 ## [1.0.0] - 2019-02-16
 
 Added
