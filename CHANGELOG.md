@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1] - 2019-05-15
+
+Changed
+
+- Updated dependency versions to fix
+  - npm reported vulnerabilities
+  - Chrome error due to AngularFire version
+- Elevation on auth cards
+
 ## [1.1.0] - 2019-02-23
 
 Added
