@@ -1,7 +1,5 @@
 @import "~@angular/material/_theming.scss";
 
-@include mat-core();
-
 $indigo-pink-light-primary: mat-palette($mat-indigo);
 $indigo-pink-light-accent: mat-palette($mat-pink);
 $indigo-pink-light-theme: mat-light-theme($indigo-pink-light-primary, $indigo-pink-light-accent);

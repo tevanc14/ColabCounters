@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2] - 2019-05-15
+
+Changed
+
+- Font to Roboto Condensed
+- Response string when adding a collaborator
+
 ## [1.1.1] - 2019-05-15
 
 Changed

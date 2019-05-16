@@ -1,6 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500");
-
 @import "~@angular/material/theming";
 
-$current-font-family: "Roboto";
-$typography: mat-typography-config($font-family: $current-font-family + ", monospace");
+$typography: mat-typography-config($font-family: "Roboto Condensed");

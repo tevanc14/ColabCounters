@@ -1,6 +1,6 @@
 {
   "name": "counters",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "scripts": {
     "build": "ng build",
     "deploy": "ng build --prod; firebase deploy",

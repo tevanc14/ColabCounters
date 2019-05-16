@@ -137,7 +137,7 @@ export class CollaboratorDialogComponent implements OnInit {
       });
     });
 
-    this.dialogRef.close(`${this.emailsToBeAdded.length} collaborators added`);
+    this.dialogRef.close(this.buildResponseString());
   }
 
   getUserFromEmail(emailAddress: string, users: User[]): User {
@@ -294,5 +294,13 @@ export class CollaboratorDialogComponent implements OnInit {
         this.counter.name
       }" counter`
     );
+  }
+
+  buildResponseString(): string {
+    if (this.emailsToBeAdded.length === 1) {
+      return `${this.emailsToBeAdded.length} collaborator added`;
+    } else {
+      return `${this.emailsToBeAdded.length} collaborators added`;
+    }
   }
 }

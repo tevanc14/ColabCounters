@@ -3,9 +3,9 @@
 @import "./material-variables.scss";
 @import "./typography.scss";
 
+@include angular-material-theme($current-theme);
+@include mat-core($typography);
+
 body {
   margin: 0;
 }
-
-@include angular-material-theme($current-theme);
-@include mat-core($typography);
