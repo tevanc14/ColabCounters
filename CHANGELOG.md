@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3] - 2019-05-25
+
+Changed
+
+- Fixed bug where buttons on email verification page were not full width
+
 ## [1.1.2] - 2019-05-15
 
 Changed
