@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.4] - 2019-11-10
+
+Changed
+
+- Updated dependencies
+
 ## [1.1.3] - 2019-05-25
 
 Changed

@@ -56,11 +56,11 @@ export class CollaboratorDialogComponent implements OnInit {
   oldCollaboratorConfiguration: CollaboratorConfiguration;
   selectedUser: User;
 
-  @ViewChild("collaboratorInput") collaboratorInput: ElementRef<
-    HTMLInputElement
-  >;
-  @ViewChild("auto") matAutocomplete: MatAutocomplete;
-  @ViewChild(MatAutocompleteTrigger) autocomplete: MatAutocompleteTrigger;
+  @ViewChild("collaboratorInput", { static: false })
+  collaboratorInput: ElementRef<HTMLInputElement>;
+  @ViewChild("auto", { static: false }) matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocompleteTrigger, { static: false })
+  autocomplete: MatAutocompleteTrigger;
 
   constructor(
     public userService: UserService,
@@ -290,9 +290,7 @@ export class CollaboratorDialogComponent implements OnInit {
       )
     );
     this.dialogRef.close(
-      `${this.selectedUser.emailAddress} removed from the "${
-        this.counter.name
-      }" counter`
+      `${this.selectedUser.emailAddress} removed from the "${this.counter.name}" counter`
     );
   }
 
