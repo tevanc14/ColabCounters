@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/counters",
+    "public": "dist/colab-counters",
     "ignore": [
       "firebase.json",
       "**/.*",
