@@ -8,6 +8,7 @@ Changed
   - Running `npm audit fix`
   - Running `ng update @angular/cdk`
   - Running `ng update @angular/cli`
+  - Running `ng update @angular/core`
 
 ## [1.1.5] - 2020-01-28
 
