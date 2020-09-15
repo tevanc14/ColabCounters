@@ -7,14 +7,9 @@ import {
   ViewChild
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import {
-  MatAutocomplete,
-  MatAutocompleteSelectedEvent,
-  MatAutocompleteTrigger,
-  MatChipInputEvent,
-  MatDialogRef,
-  MAT_DIALOG_DATA
-} from "@angular/material";
+import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger } from "@angular/material/autocomplete";
+import { MatChipInputEvent } from "@angular/material/chips";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
 import { Collaborator, Counter } from "src/app/shared/model/counter";

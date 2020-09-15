@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { MatDialog, MatSnackBar } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { CounterNameDialogComponent } from "src/app/counter-dashboard/counter-name-dialog/counter-name-dialog.component";
 import { CollaboratorDialogComponent } from "src/app/counter-dashboard/counter/collaborator-dialog/collaborator-dialog.component";
 import { ConfirmDeleteDialogComponent } from "src/app/counter-dashboard/counter/confirm-delete-dialog/confirm-delete-dialog.component";

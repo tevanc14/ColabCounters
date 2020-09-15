@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from "@angular/core";
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { Count, Counter, CountType } from "src/app/shared/model/counter";
 import { User } from "src/app/shared/model/user";
 import { UserService } from "src/app/shared/service/user/user.service";

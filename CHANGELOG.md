@@ -9,6 +9,8 @@ Changed
   - Running `ng update @angular/cdk`
   - Running `ng update @angular/cli`
   - Running `ng update @angular/core`
+  - Running `ng update @angular/material`
+- Upgraded other components as necessary to make Angular upgrades work (`hammerjs`, `webpack-dev-server`, `ngx-charts`)
 
 ## [1.1.5] - 2020-01-28
 
