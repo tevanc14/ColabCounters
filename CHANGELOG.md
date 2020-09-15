@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6] - 2020-09-15
+
+Changed
+
+- Fixing npm reported issues
+  - Running `npm audit fix`
+
 ## [1.1.5] - 2020-01-28
 
 Changed
