@@ -56,10 +56,10 @@ export class CollaboratorDialogComponent implements OnInit {
   oldCollaboratorConfiguration: CollaboratorConfiguration;
   selectedUser: User;
 
-  @ViewChild("collaboratorInput", { static: false })
+  @ViewChild("collaboratorInput")
   collaboratorInput: ElementRef<HTMLInputElement>;
-  @ViewChild("auto", { static: false }) matAutocomplete: MatAutocomplete;
-  @ViewChild(MatAutocompleteTrigger, { static: false })
+  @ViewChild("auto") matAutocomplete: MatAutocomplete;
+  @ViewChild(MatAutocompleteTrigger)
   autocomplete: MatAutocompleteTrigger;
 
   constructor(
